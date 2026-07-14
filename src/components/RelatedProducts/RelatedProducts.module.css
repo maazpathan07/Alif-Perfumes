@@ -1,0 +1,63 @@
+.related {
+  max-width: 1200px;
+
+  margin: 60px auto 0;
+}
+
+.related h2 {
+  margin-bottom: 50px;
+
+  text-align: center;
+
+  font-size: 42px;
+  font-weight: 700;
+
+  color: var(--primary);
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 30px;
+}
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 992px) {
+
+  .related {
+    margin-top: 40px;
+  }
+
+  .related h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 576px) {
+
+  .related {
+    margin-top: 30px;
+  }
+
+  .related h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+}

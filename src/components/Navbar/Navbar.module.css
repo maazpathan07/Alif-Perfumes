@@ -1,0 +1,327 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(15, 76, 58, 0.08);
+  box-shadow: 0 8px 30px rgba(15, 76, 58, 0.06);
+
+  transition: all var(--transition);
+  will-change: backdrop-filter, transform;
+}
+
+.navbar :global(.container) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+
+  transition:
+    transform .35s ease,
+    filter .35s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.06);
+  filter: drop-shadow(0 10px 18px rgba(15, 76, 58, .18));
+}
+
+.logo span {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--primary);
+
+  transition: color .3s ease;
+}
+
+.logo:hover span {
+  color: var(--primary);
+}
+
+/* =========================
+   DESKTOP NAV
+========================= */
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.navLinks a {
+  position: relative;
+
+  text-decoration: none;
+
+  color: var(--text);
+
+  font-size: 16px;
+  font-weight: 600;
+
+  transition:
+    color .3s ease,
+    transform .3s ease;
+}
+
+.navLinks a:hover {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.navLinks :global(.active) {
+  color: var(--primary);
+}
+
+.navLinks a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: -8px;
+
+  transform: translateX(-50%);
+
+  width: 0;
+  height: 3px;
+
+  border-radius: 50px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--secondary)
+  );
+
+  transition: width .35s ease;
+}
+
+.navLinks a:hover::after,
+.navLinks :global(.active)::after {
+  width: 100%;
+}
+
+/* =========================
+   DESKTOP BUTTON
+========================= */
+
+.desktopButton {
+  display: flex;
+}
+
+.desktopButton button {
+  transition: all var(--transition);
+}
+
+.desktopButton button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 30px rgba(37, 211, 102, .22);
+}
+
+/* =========================
+   MENU BUTTON
+========================= */
+
+.menuButton {
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+
+  background: transparent;
+  border: none;
+
+  color: var(--primary);
+
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+.menuButton svg {
+  width: 28px;
+  height: 28px;
+
+  stroke-width: 2.4;
+
+  transition: transform .3s ease;
+}
+
+.menuButton:hover svg {
+  transform: rotate(90deg);
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobileMenu {
+
+  position: fixed;
+
+  top: 88px;
+  right: -100%;
+
+  width: 300px;
+
+  height: calc(100vh - 88px);
+
+  padding: 40px 30px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 25px;
+
+  background: rgba(255,255,255,.96);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow: -15px 0 40px rgba(0,0,0,.08);
+
+  opacity: 0;
+
+  transition:
+    right .35s ease,
+    opacity .35s ease;
+}
+
+.show {
+  right: 0;
+  opacity: 1;
+}
+
+.mobileMenu a {
+
+  text-decoration: none;
+
+  color: var(--text);
+
+  font-size: 18px;
+  font-weight: 600;
+
+  transition: all .3s ease;
+}
+
+.mobileMenu a:hover {
+
+  color: var(--primary);
+
+  transform: translateX(8px);
+
+}
+
+.mobileMenu :global(.active) {
+  color: var(--primary);
+}
+
+.mobileMenu button {
+  margin-top: 20px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width:992px) {
+
+  .navLinks {
+    display: none;
+  }
+
+  .desktopButton {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+
+  .logo img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .logo span {
+    font-size: 26px;
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:576px) {
+
+  .navbar :global(.container) {
+    height: 75px;
+  }
+
+  .mobileMenu {
+
+    top: 75px;
+
+    width: 100%;
+
+    height: calc(100vh - 75px);
+
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo span {
+    font-size: 21px;
+  }
+
+}
+
+.desktopButton button svg,
+.mobileMenu button svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+}
+
+.logo{
+  min-width:0;
+}
+
+.logo span{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}

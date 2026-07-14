@@ -1,0 +1,154 @@
+.hero {
+  position: relative;
+
+  text-align: center;
+
+  padding: 70px 0 50px;
+
+  overflow: hidden;
+}
+
+/* ===========================
+   Background Glow
+=========================== */
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+
+  top: -180px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 600px;
+  height: 600px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(15, 76, 58, 0.08),
+    rgba(200, 169, 106, 0.05),
+    transparent 70%
+  );
+
+  filter: blur(80px);
+
+  z-index: -1;
+}
+
+/* ===========================
+   Tag
+=========================== */
+
+.tag {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 22px;
+
+  border-radius: var(--radius-full);
+
+  background: rgba(15, 76, 58, 0.08);
+
+  color: var(--primary);
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  margin-bottom: 24px;
+}
+
+/* ===========================
+   Heading
+=========================== */
+
+.hero h1 {
+  font-size: var(--heading-xl);
+
+  font-weight: var(--fw-black);
+
+  color: var(--primary);
+
+  line-height: 1.1;
+
+  margin-bottom: 22px;
+}
+
+/* ===========================
+   Description
+=========================== */
+
+.hero p {
+  max-width: 760px;
+
+  margin: auto;
+
+  font-size: 20px;
+
+  line-height: 1.8;
+
+  color: var(--text-light);
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+
+  .hero {
+
+    padding: 60px 0 40px;
+
+  }
+
+  .hero h1 {
+
+    font-size: 52px;
+
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+
+  .hero {
+
+    padding: 40px 0 30px;
+
+  }
+
+  .tag {
+
+    font-size: 14px;
+
+    padding: 9px 18px;
+
+  }
+
+  .hero h1 {
+
+    font-size: 36px;
+
+  }
+
+  .hero p {
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+  }
+
+}

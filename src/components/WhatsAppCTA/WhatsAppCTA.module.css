@@ -1,0 +1,163 @@
+.banner {
+  position: relative;
+
+  overflow: hidden;
+
+  margin: 80px 0;
+
+  padding: 80px 40px;
+
+  border-radius: 32px;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    #1d6a53
+  );
+
+  color: #fff;
+
+  text-align: center;
+
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===========================
+   Background Glow
+=========================== */
+
+.banner::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  left: -120px;
+
+  width: 320px;
+  height: 320px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.08);
+
+  filter: blur(60px);
+}
+
+.banner::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -140px;
+  right: -120px;
+
+  width: 340px;
+  height: 340px;
+
+  border-radius: 50%;
+
+  background: rgba(200,169,106,.12);
+
+  filter: blur(70px);
+}
+
+/* ===========================
+   Content
+=========================== */
+
+.banner > * {
+  position: relative;
+  z-index: 2;
+}
+
+.tag {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 10px 20px;
+
+  margin-bottom: 22px;
+
+  border-radius: var(--radius-full);
+
+  background: rgba(255,255,255,.12);
+
+  backdrop-filter: blur(10px);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: .5px;
+}
+
+.banner h2 {
+  font-size: clamp(32px, 5vw, 46px);
+
+  font-weight: var(--fw-black);
+
+  line-height: 1.2;
+
+  margin-bottom: 18px;
+}
+
+.banner p {
+  max-width: 720px;
+
+  margin: 0 auto 35px;
+
+  font-size: 19px;
+
+  line-height: 1.9;
+
+  opacity: .92;
+}
+
+.banner button {
+  min-width: 240px;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+
+  .banner {
+    padding: 70px 30px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+
+  .banner {
+    margin: 60px 0;
+
+    padding: 55px 22px;
+
+    border-radius: 24px;
+  }
+
+  .tag {
+    margin-bottom: 18px;
+
+    font-size: 13px;
+  }
+
+  .banner p {
+    font-size: 17px;
+  }
+
+  .banner button {
+    width: 100%;
+    min-width: auto;
+  }
+
+}

@@ -1,0 +1,117 @@
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(320px, 1fr)
+  );
+
+  gap: 32px;
+
+  align-items: stretch;
+
+  margin-top: 20px;
+
+  margin-bottom: 80px;
+}
+
+/* ===========================
+   EMPTY STATE
+=========================== */
+
+.empty {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+
+  padding: 100px 20px;
+
+  border: 2px dashed rgba(15, 76, 58, 0.12);
+
+  border-radius: var(--radius-lg);
+
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #fafafa
+  );
+}
+
+.empty h2 {
+  font-size: 34px;
+
+  color: var(--primary);
+
+  margin-bottom: 12px;
+}
+
+.empty p {
+  max-width: 420px;
+
+  color: var(--text-light);
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+
+  .grid {
+
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(280px, 1fr)
+    );
+
+    gap: 24px;
+
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+
+  .grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    margin-bottom: 50px;
+
+  }
+
+  .empty {
+
+    padding: 70px 20px;
+
+  }
+
+  .empty h2 {
+
+    font-size: 28px;
+
+  }
+
+  .empty p {
+
+    font-size: 16px;
+
+  }
+
+}

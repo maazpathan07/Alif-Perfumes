@@ -1,0 +1,290 @@
+.hero {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  gap: 70px;
+
+  min-height: calc(100vh - 88px);
+
+  overflow: hidden;
+}
+
+/* ===========================
+   Background Glow
+=========================== */
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+  right: -120px;
+
+  width: 560px;
+  height: 560px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(15, 76, 58, 0.12),
+    rgba(200, 169, 106, 0.08),
+    transparent 72%
+  );
+
+  filter: blur(90px);
+
+  z-index: -1;
+}
+
+/* ===========================
+   Left
+=========================== */
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  padding: 10px 20px;
+
+  border-radius: var(--radius-full);
+
+  background: rgba(15, 76, 58, 0.08);
+
+  color: var(--primary);
+
+  font-weight: 600;
+
+  margin-bottom: 28px;
+}
+
+.left h1 {
+  font-size: clamp(42px, 6vw, 68px);
+
+  line-height: 1.08;
+
+  font-weight: var(--fw-black);
+
+  letter-spacing: -2px;
+
+  color: var(--primary);
+
+  margin-bottom: 24px;
+}
+
+.left p {
+  max-width: 560px;
+
+  font-size: 20px;
+
+  line-height: 1.8;
+
+  color: var(--text-light);
+
+  margin-bottom: 40px;
+}
+
+.buttons {
+  display: flex;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 55px;
+}
+
+.buttons a {
+  text-decoration: none;
+}
+
+/* ===========================
+   Stats
+=========================== */
+
+.stats {
+  display: flex;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+.stats div {
+  min-width: 150px;
+
+  padding: 18px;
+
+  background: var(--surface);
+
+  border: 1px solid rgba(15, 76, 58, 0.08);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+
+  transition: all var(--transition);
+}
+
+.stats div:hover {
+  transform: translateY(-6px);
+
+  box-shadow: var(--shadow-md);
+}
+
+.stats h3 {
+  font-size: 30px;
+
+  color: var(--primary);
+
+  margin-bottom: 6px;
+}
+
+.stats span {
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+/* ===========================
+   Right
+=========================== */
+
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 560px;
+  height: 560px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(15, 76, 58, 0.10),
+    rgba(200, 169, 106, 0.06),
+    transparent 72%
+  );
+}
+
+.perfume {
+  width: 380px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 35px 45px rgba(0, 0, 0, .20)
+  );
+
+  transition: transform .35s ease;
+}
+
+.perfume:hover {
+  transform: scale(1.05);
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:992px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    text-align: center;
+
+    min-height: auto;
+  }
+
+  .left {
+    align-items: center;
+  }
+
+  .buttons,
+  .stats {
+    justify-content: center;
+  }
+
+  .imageBox {
+    width: 430px;
+    height: 430px;
+  }
+
+  .perfume {
+    width: 290px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:576px) {
+
+  .hero {
+    gap: 40px;
+  }
+
+  .tag {
+    margin: 0 auto 20px;
+  }
+
+  .left p {
+    font-size: 17px;
+  }
+
+  .buttons {
+    width: 100%;
+
+    flex-direction: column;
+  }
+
+  .buttons a {
+    width: 100%;
+  }
+
+  .buttons button {
+    width: 100%;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .stats div {
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .imageBox {
+    width: 320px;
+    height: 320px;
+  }
+
+  .perfume {
+    width: 220px;
+  }
+
+}

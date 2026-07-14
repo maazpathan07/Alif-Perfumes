@@ -1,0 +1,147 @@
+@import "./variables.css";
+
+/* ===========================
+   Reset
+=========================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+/* ===========================
+   Base
+=========================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(15, 76, 58, .05),
+      transparent 35%
+    ),
+    #fafaf8;
+
+  color: var(--text);
+
+  font-family: Inter, Arial, sans-serif;
+
+  overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+}
+
+/* ===========================
+   Media
+=========================== */
+
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+
+  max-width: 100%;
+}
+
+img {
+  user-select: none;
+}
+
+/* ===========================
+   Form Elements
+=========================== */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  outline: none;
+}
+
+/* ===========================
+   Links
+=========================== */
+
+a {
+  color: inherit;
+
+  text-decoration: none;
+}
+
+/* ===========================
+   Lists
+=========================== */
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ===========================
+   Selection
+=========================== */
+
+::selection {
+  background: var(--primary);
+
+  color: white;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f3f3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+}
+
+/* ===========================
+   Container
+=========================== */
+
+.container {
+  width: min(90%, 1200px);
+
+  margin: auto;
+}

@@ -1,0 +1,158 @@
+.button{
+  position:relative;
+  overflow:hidden;
+
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+
+  padding:15px 30px;
+
+  border:none;
+  outline:none;
+
+  cursor:pointer;
+
+  border-radius:var(--radius-md);
+
+  font-size:var(--fs-md);
+  font-weight:var(--fw-semibold);
+
+  transition:all var(--transition);
+
+  user-select:none;
+}
+
+.button span{
+  position:relative;
+  z-index:2;
+
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+}
+
+.button svg{
+  width:18px;
+  height:18px;
+
+  flex-shrink:0;
+}
+
+/* ==========================
+   PRIMARY
+========================== */
+
+.primary{
+  color:#fff;
+
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-light)
+  );
+}
+
+.primary:hover:not(:disabled){
+  transform:translateY(-3px);
+
+  box-shadow:0 12px 30px rgba(15,76,58,.22);
+}
+
+.primary:active:not(:disabled){
+  transform:scale(.97);
+}
+
+/* ==========================
+   SECONDARY
+========================== */
+
+.secondary{
+  color:var(--primary);
+
+  background:rgba(200,169,106,.15);
+
+  border:1px solid rgba(200,169,106,.45);
+}
+
+.secondary:hover:not(:disabled){
+  background:var(--secondary);
+
+  color:#fff;
+
+  transform:translateY(-3px);
+
+  box-shadow:0 12px 30px rgba(200,169,106,.22);
+}
+
+.secondary:active:not(:disabled){
+  transform:scale(.97);
+}
+
+/* ==========================
+   DISABLED
+========================== */
+
+.button:disabled{
+  opacity:.6;
+
+  cursor:not-allowed;
+
+  transform:none;
+
+  box-shadow:none;
+}
+
+/* ==========================
+   FOCUS
+========================== */
+
+.button:focus-visible{
+  box-shadow:
+    0 0 0 4px rgba(15,76,58,.18);
+}
+
+/* ==========================
+   RIPPLE
+========================== */
+
+.button::before{
+  content:"";
+
+  position:absolute;
+
+  left:50%;
+  top:50%;
+
+  width:0;
+  height:0;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.18);
+
+  transform:translate(-50%,-50%);
+
+  transition:.55s;
+}
+
+.button:hover::before{
+  width:320px;
+  height:320px;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:576px){
+
+  .button{
+    width:100%;
+
+    padding:15px 20px;
+  }
+
+}

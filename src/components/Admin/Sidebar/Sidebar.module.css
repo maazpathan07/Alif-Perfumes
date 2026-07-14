@@ -1,0 +1,234 @@
+.sidebar {
+  width: 270px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(
+    180deg,
+    #0f4c3a,
+    #0b3a2c
+  );
+
+  color: white;
+
+  padding: 28px 20px;
+
+  border-right: 1px solid rgba(255,255,255,.08);
+
+  position: sticky;
+  top: 0;
+
+  height: 100vh;
+
+  transition: transform .35s ease;
+
+  z-index: 999;
+}
+
+/* ==========================
+   Logo
+========================== */
+
+.logo {
+  position: relative;
+
+  text-align: center;
+
+  margin-bottom: 45px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.logo h2 {
+  font-size: 34px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.logo span {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 13px;
+
+  color: rgba(255,255,255,.7);
+}
+
+/* ==========================
+   Close Button
+========================== */
+
+.closeButton {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,.1);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.closeButton:hover {
+  background: rgba(255,255,255,.18);
+}
+
+/* ==========================
+   Navigation
+========================== */
+
+.nav {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  flex: 1;
+}
+
+.link {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  color: rgba(255,255,255,.88);
+
+  text-decoration: none;
+
+  transition: all .3s ease;
+}
+
+.link svg {
+  flex-shrink: 0;
+}
+
+.link:hover {
+  background: rgba(255,255,255,.1);
+
+  color: white;
+
+  transform: translateX(4px);
+}
+
+/* ==========================
+   Active
+========================== */
+
+.active {
+  background: white;
+
+  color: var(--primary);
+
+  font-weight: 700;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,.18);
+}
+
+.active svg {
+  color: var(--primary);
+}
+
+/* ==========================
+   Tablet
+========================== */
+
+@media (max-width:992px) {
+
+  .sidebar {
+    width: 90px;
+
+    padding: 24px 12px;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  .logo h2 {
+    font-size: 28px;
+  }
+
+  .link {
+    justify-content: center;
+
+    padding: 14px;
+  }
+
+  .link span {
+    display: none;
+  }
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width:768px) {
+
+  .sidebar {
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 270px;
+
+    height: 100vh;
+
+    transform: translateX(-100%);
+
+    padding: 28px 20px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .closeButton {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo span {
+    display: block;
+  }
+
+  .link {
+    justify-content: flex-start;
+  }
+
+  .link span {
+    display: block;
+  }
+
+}

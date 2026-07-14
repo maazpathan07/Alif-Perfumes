@@ -1,0 +1,148 @@
+.header {
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  color: var(--primary);
+
+  font-size: 36px;
+  font-weight: 700;
+
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: var(--text-light);
+
+  font-size: 16px;
+
+  line-height: 1.6;
+}
+
+/* ===========================
+   Stats Grid
+=========================== */
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 24px;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  border: 1px solid rgba(15, 76, 58, 0.08);
+
+  box-shadow: var(--shadow-sm);
+
+  transition: all var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: var(--shadow-md);
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 76, 58, 0.08);
+
+  color: var(--primary);
+}
+
+.card h2 {
+  color: var(--primary);
+
+  font-size: 34px;
+
+  margin-bottom: 8px;
+}
+
+.card span {
+  color: var(--text-light);
+
+  font-size: 15px;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+
+  .header {
+    margin-bottom: 24px;
+
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .header p {
+    font-size: 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 16px;
+  }
+
+  .card h2 {
+    font-size: 28px;
+  }
+
+}

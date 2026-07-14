@@ -1,0 +1,157 @@
+.card {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  background: var(--surface);
+
+  border: 1px solid rgba(15, 76, 58, 0.08);
+
+  border-radius: var(--radius-lg);
+
+  padding: 28px;
+
+  text-decoration: none;
+
+  color: inherit;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: all var(--transition);
+
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+
+  border-color: rgba(200, 169, 106, 0.35);
+
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===========================
+   Image
+=========================== */
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 140px;
+
+  margin-bottom: 22px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(15, 76, 58, 0.05),
+    rgba(200, 169, 106, 0.08)
+  );
+
+  overflow: hidden;
+}
+
+.image img {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain;
+
+  transition: transform .35s ease;
+}
+
+.image span {
+  font-size: 54px;
+}
+
+.card:hover .image img {
+  transform: scale(1.08);
+}
+
+/* ===========================
+   Content
+=========================== */
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+}
+
+.content h3 {
+  color: var(--primary);
+
+  font-size: 22px;
+
+  margin-bottom: 10px;
+}
+
+.content p {
+  color: var(--text-light);
+
+  line-height: 1.7;
+
+  font-size: 15px;
+
+  margin-bottom: auto;
+}
+
+/* ===========================
+   Link
+=========================== */
+
+.link {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 20px;
+
+  color: var(--primary);
+
+  font-weight: 600;
+
+  transition: all var(--transition);
+}
+
+.card:hover .link {
+  gap: 14px;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+
+  .image {
+    height: 120px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+
+  .card {
+    padding: 22px;
+  }
+
+  .content h3 {
+    font-size: 20px;
+  }
+
+  .content p {
+    font-size: 14px;
+  }
+
+}

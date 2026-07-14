@@ -1,0 +1,245 @@
+.topbar {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+
+  background: white;
+
+  border-bottom: 1px solid rgba(15, 76, 58, .08);
+
+  box-shadow: var(--shadow-sm);
+
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+}
+
+/* ===========================
+   Left
+=========================== */
+
+.left {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  width: 380px;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  background: #f5f7fa;
+}
+
+.left svg {
+  color: var(--text-light);
+
+  flex-shrink: 0;
+}
+
+.left input {
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+}
+
+/* ===========================
+   Right
+=========================== */
+
+.right {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+/* ===========================
+   Icon
+=========================== */
+
+.icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f5f7fa;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.icon:hover {
+  background: rgba(15,76,58,.08);
+
+  color: var(--primary);
+}
+
+/* ===========================
+   Profile
+=========================== */
+
+.profile {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.profile svg {
+  color: var(--primary);
+}
+
+.profileInfo h4 {
+  font-size: 15px;
+
+  color: var(--primary);
+}
+
+.profileInfo span {
+  font-size: 13px;
+
+  color: var(--text-light);
+}
+
+/* ===========================
+   Logout
+=========================== */
+
+.logout {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 12px 18px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #ef4444;
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.logout:hover {
+  background: #dc2626;
+}
+
+/* ===========================
+   Hamburger
+=========================== */
+
+.menuButton {
+  display: none;
+
+  width: 46px;
+  height: 46px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #f5f7fa;
+
+  cursor: pointer;
+
+  transition: .3s;
+}
+
+.menuButton:hover {
+  background: rgba(15,76,58,.08);
+
+  color: var(--primary);
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:992px){
+
+  .left{
+    width:260px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:768px){
+
+  .topbar{
+    padding:0 16px;
+
+    gap:12px;
+  }
+
+  .menuButton{
+    display:flex;
+  }
+
+  .left{
+    flex:1;
+
+    width:auto;
+
+    padding:10px 14px;
+  }
+
+  .profileInfo{
+    display:none;
+  }
+
+  .logout{
+    padding:10px;
+  }
+
+  .logout span{
+    display:none;
+  }
+
+}
+
+@media (max-width:480px){
+
+  .icon{
+    display:none;
+  }
+
+  .left{
+    max-width:170px;
+  }
+
+}
