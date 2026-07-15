@@ -8,6 +8,11 @@ import {
   updateTestimonial,
 } from "../../../../services/testimonialService";
 
+import {
+  uploadImage,
+  deleteImage,
+} from "../../../../services/storageService";
+
 import styles from "./TestimonialForm.module.css";
 
 import toast from "react-hot-toast";
@@ -15,6 +20,7 @@ import toast from "react-hot-toast";
 function TestimonialForm({
   testimonial,
   onSuccess,
+  setIsDirty,
 }) {
   const [loading, setLoading] =
     useState(false);
@@ -26,27 +32,59 @@ function TestimonialForm({
       rating: 5,
       review: "",
       image: "",
+      isActive: true,
     });
+
+  const [imageFile, setImageFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (!setIsDirty) return;
+
+    let dirty;
+    if (testimonial) {
+      const nameChanged = (formData.name || "") !== (testimonial.name || "");
+      const cityChanged = (formData.city || "") !== (testimonial.city || "");
+      const ratingChanged = Number(formData.rating || 5) !== Number(testimonial.rating || 5);
+      const reviewChanged = (formData.review || "") !== (testimonial.review || "");
+      const activeChanged = (formData.isActive ?? true) !== (testimonial.isActive ?? true);
+      const imageChanged = !!imageFile;
+
+      dirty = nameChanged || cityChanged || ratingChanged || reviewChanged || activeChanged || imageChanged;
+    } else {
+      dirty = !!formData.name || !!formData.city || !!formData.review || !formData.isActive || !!imageFile;
+    }
+
+    setIsDirty(dirty);
+  }, [formData, imageFile, testimonial, setIsDirty]);
+
 
   useEffect(() => {
     if (!testimonial) return;
 
-    setFormData({
-      name: testimonial.name || "",
-      city: testimonial.city || "",
-      rating: testimonial.rating || 5,
-      review: testimonial.review || "",
-      image: testimonial.image || "",
+    Promise.resolve().then(() => {
+      setFormData({
+        name: testimonial.name || "",
+        city: testimonial.city || "",
+        rating: testimonial.rating || 5,
+        review: testimonial.review || "",
+        image: testimonial.image || "",
+        isActive: testimonial.isActive ?? true,
+      });
+      setImageFile(null);
     });
   }, [testimonial]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
 
     setFormData((prev) => ({
       ...prev,
       [name]:
-        name === "rating"
+        type === "checkbox"
+          ? checked
+          : name === "rating"
           ? Number(value)
           : value,
     }));
@@ -59,7 +97,11 @@ function TestimonialForm({
       rating: 5,
       review: "",
       image: "",
+      isActive: true,
     });
+    setImageFile(null);
+    setUploadProgress(0);
+    setStatus("");
   };
 
   const handleSubmit = async (e) => {
@@ -68,12 +110,42 @@ function TestimonialForm({
     setLoading(true);
 
     try {
+      let imageUrl = formData.image;
+
+      if (imageFile) {
+        if (testimonial?.image && testimonial.image.startsWith("http")) {
+          try {
+            await deleteImage(testimonial.image);
+          } catch (err) {
+            console.warn("Could not delete old image:", err);
+          }
+        }
+
+        setStatus("Uploading");
+        imageUrl = await uploadImage(
+          imageFile,
+          "testimonials",
+          (progress) => {
+            setUploadProgress(progress);
+          }
+        );
+        setStatus("Saving");
+      }
+
+      const testimonialData = {
+        name: formData.name,
+        city: formData.city,
+        rating: Number(formData.rating),
+        review: formData.review,
+        image: imageUrl,
+        isActive: formData.isActive,
+      };
 
       if (testimonial) {
 
         await updateTestimonial(
           testimonial.id,
-          formData
+          testimonialData
         );
 
         toast.success("Testimonial updated successfully!");
@@ -81,12 +153,11 @@ function TestimonialForm({
       } else {
 
         await addTestimonial({
-          ...formData,
+          ...testimonialData,
           createdAt: new Date(),
         });
 
         toast.success("Testimonial added successfully!");
-        
 
       }
 
@@ -98,11 +169,13 @@ function TestimonialForm({
 
       console.error(error);
 
-      toast.error("Something went wrong.");
+      toast.error(error.message || "Something went wrong.");
 
     } finally {
 
       setLoading(false);
+      setStatus("");
+      setUploadProgress(0);
 
     }
   };
@@ -152,10 +225,65 @@ function TestimonialForm({
       <input
         type="text"
         name="image"
-        placeholder="Photo URL"
+        placeholder="Photo URL (Fallback)"
         value={formData.image}
         onChange={handleChange}
       />
+
+      <div className={styles.fileInputGroup}>
+        <label>Or Upload Testimonial Photo File:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImageFile(e.target.files[0])}
+        />
+      </div>
+
+      {(imageFile || formData.image) && (
+        <div className={styles.previewContainer}>
+          <img
+            src={imageFile ? URL.createObjectURL(imageFile) : formData.image}
+            alt="Preview"
+            className={styles.preview}
+          />
+          {imageFile && (
+            <button
+              type="button"
+              onClick={() => setImageFile(null)}
+              className={styles.removePreview}
+            >
+              Remove
+            </button>
+          )}
+        </div>
+      )}
+
+      {loading && status === "Uploading" && (
+        <div className={styles.progressContainer}>
+          <div className={styles.progressTop}>
+            <span>Uploading Image...</span>
+            <span>{uploadProgress}%</span>
+          </div>
+          <div className={styles.progressTrack}>
+            <div
+              className={styles.progressFill}
+              style={{
+                width: `${uploadProgress}%`,
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      <label className={styles.check}>
+        <input
+          type="checkbox"
+          name="isActive"
+          checked={formData.isActive}
+          onChange={handleChange}
+        />
+        <span>Active (Show on Website)</span>
+      </label>
 
       <button
         className={styles.button}
@@ -163,9 +291,7 @@ function TestimonialForm({
         disabled={loading}
       >
         {loading
-          ? testimonial
-            ? "Updating..."
-            : "Saving..."
+          ? status || "Saving..."
           : testimonial
           ? "Update Testimonial"
           : "Save Testimonial"}

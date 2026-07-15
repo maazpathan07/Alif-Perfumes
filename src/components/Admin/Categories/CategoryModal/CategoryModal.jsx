@@ -7,6 +7,7 @@ function CategoryModal({
   onClose,
   category,
   onSuccess,
+  setIsDirty,
 }) {
   return (
     <Modal
@@ -21,6 +22,7 @@ function CategoryModal({
       <CategoryForm
         category={category}
         onSuccess={onSuccess}
+        setIsDirty={setIsDirty}
       />
     </Modal>
   );

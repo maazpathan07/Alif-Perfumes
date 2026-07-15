@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+
+
 import {
   Eye,
   MessageCircle,
@@ -42,24 +43,29 @@ function ProductCard({ product }) {
             <span>{product.rating}</span>
           </div>
 
-          <div className={styles.price}>
-            ₹{product.price}
+          <div className={styles.priceContainer}>
+            {product.discountPrice ? (
+              <>
+                <span className={styles.discountPrice}>₹{product.discountPrice}</span>
+                <span className={styles.originalPrice}>₹{product.price}</span>
+              </>
+            ) : (
+              <span className={styles.price}>₹{product.price}</span>
+            )}
           </div>
 
           <div className={styles.buttons}>
 
-            <Link
+            <Button
               to={`/product/${product.id}`}
               className={styles.link}
             >
-              <Button>
-                <Eye
-                  size={18}
-                  strokeWidth={2.2}
-                />
-                View
-              </Button>
-            </Link>
+              <Eye
+                size={18}
+                strokeWidth={2.2}
+              />
+              View
+            </Button>
 
             <Button
               variant="secondary"

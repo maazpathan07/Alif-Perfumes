@@ -261,31 +261,69 @@
 @media (max-width: 576px) {
 
   .hero {
-    padding: 40px 0 10px;
+    padding: 30px 0 10px;
+  }
+
+  .tag {
+    font-size: 13px;
+    padding: 8px 16px;
+    margin-bottom: 16px;
   }
 
   .hero h1 {
-    font-size: 36px;
+    font-size: 28px;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .hero p {
-    font-size: 17px;
+    font-size: 15px;
+    line-height: 1.7;
   }
 
   .values h2 {
-    font-size: 32px;
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .cards > div {
+    padding: 16px;
+    font-size: 14px;
   }
 
   .grid > div {
-    padding: 26px;
+    padding: 22px 18px;
+  }
+
+  .grid h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .grid p {
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   .cta {
-    padding: 45px 22px;
+    padding: 35px 18px;
+    border-radius: 20px;
   }
 
   .cta h2 {
-    font-size: 30px;
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .cta p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 22px;
   }
 
 }

@@ -72,7 +72,7 @@ function Sidebar({
           <X size={24} />
         </button>
 
-        <h2>ALIF</h2>
+        <h2>ALIF PERFUMES</h2>
 
         <span>Admin Panel</span>
 

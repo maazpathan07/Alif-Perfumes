@@ -11,7 +11,9 @@ import toast from "react-hot-toast";
 import {
   getTestimonials,
   deleteTestimonial,
+  updateTestimonial,
 } from "../../../../services/testimonialService";
+import { deleteImage } from "../../../../services/storageService";
 
 import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import EmptyState from "../../../UI/EmptyState/EmptyState";
@@ -33,37 +35,35 @@ function TestimonialTable({ onEdit }) {
     useState(null);
 
   useEffect(() => {
-    loadTestimonials();
+    let active = true;
+    getTestimonials()
+      .then((data) => {
+        if (active) {
+          setTestimonials(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Failed to load testimonials.");
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadTestimonials() {
-    try {
-
-      const data =
-        await getTestimonials();
-
-      setTestimonials(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-      toast.error(
-        "Failed to load testimonials."
-      );
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   async function handleDelete() {
-
     if (!deleteId) return;
 
     try {
+      const target = testimonials.find((item) => item.id === deleteId);
+      if (target?.image) {
+        await deleteImage(target.image);
+      }
 
       await deleteTestimonial(deleteId);
 
@@ -79,22 +79,33 @@ function TestimonialTable({ onEdit }) {
       );
 
     } catch (error) {
-
       console.error(error);
-
       toast.error(
         "Something went wrong."
       );
-
     } finally {
-
       setShowModal(false);
-
       setDeleteId(null);
-
     }
-
   }
+
+  const handleToggleActive = async (testimonial) => {
+    const updatedActive = testimonial.isActive === false ? false : true;
+    const nextVal = !updatedActive;
+    try {
+      setTestimonials((prev) =>
+        prev.map((t) => (t.id === testimonial.id ? { ...t, isActive: nextVal } : t))
+      );
+      await updateTestimonial(testimonial.id, { isActive: nextVal });
+      toast.success(`Review visibility is now ${nextVal ? "Active" : "Inactive"}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update visibility status.");
+      setTestimonials((prev) =>
+        prev.map((t) => (t.id === testimonial.id ? { ...t, isActive: updatedActive } : t))
+      );
+    }
+  };
 
   if (loading) {
     return (
@@ -135,6 +146,8 @@ function TestimonialTable({ onEdit }) {
 
               <th>Review</th>
 
+              <th>Visibility</th>
+
               <th>Actions</th>
 
             </tr>
@@ -160,7 +173,7 @@ function TestimonialTable({ onEdit }) {
 
                 </td>
 
-                <td>{testimonial.name}</td>
+                <td style={{ fontWeight: 600 }}>{testimonial.name}</td>
 
                 <td>{testimonial.city}</td>
 
@@ -180,6 +193,30 @@ function TestimonialTable({ onEdit }) {
                 </td>
 
                 <td>{testimonial.review}</td>
+
+                <td>
+                  <button
+                    onClick={() => handleToggleActive(testimonial)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    title="Click to toggle Review visibility"
+                  >
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "4px 10px",
+                        borderRadius: "99px",
+                        fontSize: "11px",
+                        fontWeight: "700",
+                        background: testimonial.isActive !== false ? "#dcfce7" : "#fee2e2",
+                        color: testimonial.isActive !== false ? "#16a34a" : "#dc2626"
+                      }}
+                    >
+                      {testimonial.isActive !== false
+                        ? "Active"
+                        : "Inactive"}
+                    </span>
+                  </button>
+                </td>
 
                 <td>
 

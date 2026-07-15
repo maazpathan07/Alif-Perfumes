@@ -94,6 +94,9 @@
 
     margin-bottom: 50px;
 
+    max-width: 100%;
+    overflow: hidden;
+
   }
 
   .empty {

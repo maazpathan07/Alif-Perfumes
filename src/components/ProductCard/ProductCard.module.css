@@ -125,13 +125,30 @@
   flex-shrink: 0;
 }
 
-.price {
+.priceContainer {
   margin-bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
+.price {
   font-size: 32px;
   font-weight: 700;
-
   color: var(--primary);
+}
+
+.discountPrice {
+  font-size: 32px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.originalPrice {
+  font-size: 18px;
+  text-decoration: line-through;
+  color: #94a3b8;
 }
 
 /* ===========================
@@ -206,8 +223,9 @@
     font-size:24px;
   }
 
-  .price{
-    font-size:28px;
+  .price,
+  .discountPrice {
+    font-size: 28px;
   }
 
 }
@@ -218,28 +236,66 @@
 
 @media (max-width:576px){
 
+  .card{
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .imageWrapper{
-    height:240px;
+    height:220px;
   }
 
   .image{
-    width:160px;
+    width:140px;
   }
 
   .content{
-    padding:20px;
+    padding:18px 16px;
   }
 
   .content h3{
-    font-size:22px;
+    font-size:20px;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
-  .price{
-    font-size:26px;
+  .category{
+    font-size: 12px;
+    padding: 5px 10px;
+    margin-bottom: 8px;
+  }
+
+  .rating{
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .priceContainer {
+    margin-bottom: 16px;
+  }
+
+  .price,
+  .discountPrice {
+    font-size: 24px;
+  }
+
+  .originalPrice {
+    font-size: 15px;
   }
 
   .buttons{
     flex-direction:column;
+    gap: 10px;
+  }
+
+  .buttons button,
+  .buttons a{
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  .link{
+    width: 100%;
   }
 
 }

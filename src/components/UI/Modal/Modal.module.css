@@ -108,22 +108,44 @@ transform:scale(1);
 
 @media(max-width:768px){
 
-.modal{
+  .modal{
+    max-width:100%;
+  }
 
-max-width:100%;
+  .header{
+    padding:18px 20px;
+  }
+
+  .header h2{
+    font-size:20px;
+  }
+
+  .body{
+    padding:20px;
+  }
 
 }
 
-.header{
+@media(max-width:480px){
 
-padding:20px;
+  .overlay{
+    padding:12px;
+  }
 
-}
+  .modal{
+    border-radius:16px;
+  }
 
-.body{
+  .header{
+    padding:16px;
+  }
 
-padding:20px;
+  .header h2{
+    font-size:18px;
+  }
 
-}
+  .body{
+    padding:16px;
+  }
 
 }

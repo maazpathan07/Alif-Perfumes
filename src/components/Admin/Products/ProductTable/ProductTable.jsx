@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Pencil,
   Trash2,
+  Star,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -11,6 +12,7 @@ import {
   getProducts,
   deleteProduct,
 } from "../../../../services/productService";
+import { deleteImage } from "../../../../services/storageService";
 
 import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import EmptyState from "../../../UI/EmptyState/EmptyState";
@@ -18,7 +20,7 @@ import ConfirmModal from "../../../UI/ConfirmModal/ConfirmModal";
 
 import styles from "./ProductTable.module.css";
 
-function ProductTable({ onEdit }) {
+function ProductTable({ onEdit, search = "", category = "All Categories" }) {
   const [products, setProducts] =
     useState([]);
 
@@ -32,37 +34,35 @@ function ProductTable({ onEdit }) {
     useState(null);
 
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    getProducts()
+      .then((data) => {
+        if (active) {
+          setProducts(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Failed to load products.");
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadProducts() {
-    try {
-
-      const data =
-        await getProducts();
-
-      setProducts(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-      toast.error(
-        "Failed to load products."
-      );
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   async function handleDelete() {
-
     if (!deleteId) return;
 
     try {
+      const target = products.find((p) => p.id === deleteId);
+      if (target?.image) {
+        await deleteImage(target.image);
+      }
 
       await deleteProduct(deleteId);
 
@@ -78,22 +78,60 @@ function ProductTable({ onEdit }) {
       );
 
     } catch (error) {
-
       console.error(error);
-
       toast.error(
         "Something went wrong."
       );
-
     } finally {
-
       setShowModal(false);
-
       setDeleteId(null);
-
     }
-
   }
+
+  const handleToggleStock = async (product) => {
+    const updatedStatus = !product.inStock;
+    try {
+      setProducts((prev) =>
+        prev.map((p) => (p.id === product.id ? { ...p, inStock: updatedStatus } : p))
+      );
+      await updateProduct(product.id, { inStock: updatedStatus });
+      toast.success(`${product.name} is now ${updatedStatus ? "In Stock" : "Out of Stock"}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update stock status.");
+      setProducts((prev) =>
+        prev.map((p) => (p.id === product.id ? { ...p, inStock: !updatedStatus } : p))
+      );
+    }
+  };
+
+  const handleToggleFeatured = async (product) => {
+    const updatedFeatured = !product.featured;
+    try {
+      setProducts((prev) =>
+        prev.map((p) => (p.id === product.id ? { ...p, featured: updatedFeatured } : p))
+      );
+      await updateProduct(product.id, { featured: updatedFeatured });
+      toast.success(updatedFeatured ? `${product.name} is now Featured!` : `${product.name} removed from Featured.`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update featured status.");
+      setProducts((prev) =>
+        prev.map((p) => (p.id === product.id ? { ...p, featured: !updatedFeatured } : p))
+      );
+    }
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch =
+      !search ||
+      product.name?.toLowerCase().includes(search.toLowerCase()) ||
+      product.description?.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      category === "All Categories" ||
+      product.category === category;
+    return matchesSearch && matchesCategory;
+  });
 
   if (loading) {
     return (
@@ -103,12 +141,12 @@ function ProductTable({ onEdit }) {
     );
   }
 
-  if (products.length === 0) {
+  if (filteredProducts.length === 0) {
     return (
       <div className={styles.wrapper}>
         <EmptyState
           title="No Products Found"
-          subtitle="Create your first product to see it here."
+          subtitle="Try adjusting your search or filters."
         />
       </div>
     );
@@ -130,9 +168,11 @@ function ProductTable({ onEdit }) {
 
               <th>Category</th>
 
-              <th>Price</th>
+              <th>Original Price</th>
 
-              <th>Rating</th>
+              <th>Sale Price</th>
+
+              <th>Featured</th>
 
               <th>Status</th>
 
@@ -144,7 +184,8 @@ function ProductTable({ onEdit }) {
 
           <tbody>
 
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
+
 
               <tr key={product.id}>
 
@@ -161,28 +202,52 @@ function ProductTable({ onEdit }) {
 
                 </td>
 
-                <td>{product.name}</td>
+                <td style={{ fontWeight: 600 }}>{product.name}</td>
 
                 <td>{product.category}</td>
 
                 <td>₹{product.price}</td>
 
-                <td>{product.rating} ⭐</td>
+                <td>
+                  {product.discountPrice ? (
+                    <strong style={{ color: "#16a34a" }}>₹{product.discountPrice}</strong>
+                  ) : (
+                    <span style={{ color: "#94a3b8" }}>-</span>
+                  )}
+                </td>
 
                 <td>
-
-                  <span
-                    className={
-                      product.inStock
-                        ? styles.inStock
-                        : styles.outStock
-                    }
+                  <button
+                    onClick={() => handleToggleFeatured(product)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center' }}
+                    title={product.featured ? "Remove from Featured" : "Feature on Homepage"}
                   >
-                    {product.inStock
-                      ? "In Stock"
-                      : "Out of Stock"}
-                  </span>
+                    <Star
+                      size={20}
+                      fill={product.featured ? "#fbbf24" : "none"}
+                      color={product.featured ? "#fbbf24" : "#94a3b8"}
+                    />
+                  </button>
+                </td>
 
+                <td>
+                  <button
+                    onClick={() => handleToggleStock(product)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    title="Click to toggle Stock Status"
+                  >
+                    <span
+                      className={
+                        product.inStock
+                          ? styles.inStock
+                          : styles.outStock
+                      }
+                    >
+                      {product.inStock
+                        ? "In Stock"
+                        : "Out of Stock"}
+                    </span>
+                  </button>
                 </td>
 
                 <td>

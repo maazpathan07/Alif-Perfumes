@@ -6,32 +6,15 @@ import {
 import { db } from "./firebase";
 
 export async function getDashboardStats() {
-  const productsSnapshot =
-    await getDocs(
-      collection(db, "products")
-    );
-
-  const categoriesSnapshot =
-    await getDocs(
-      collection(db, "categories")
-    );
-
-  const products =
-    productsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+  const productsSnapshot = await getDocs(collection(db, "products"));
+  const categoriesSnapshot = await getDocs(collection(db, "categories"));
+  const ordersSnapshot = await getDocs(collection(db, "orders"));
+  const testimonialsSnapshot = await getDocs(collection(db, "testimonials"));
 
   return {
-    totalProducts:
-      products.length,
-
-    totalCategories:
-      categoriesSnapshot.size,
-
-    featuredProducts:
-      products.filter(
-        (item) => item.featured
-      ).length,
+    totalProducts: productsSnapshot.size,
+    totalCategories: categoriesSnapshot.size,
+    totalOrders: ordersSnapshot.size,
+    totalTestimonials: testimonialsSnapshot.size,
   };
 }

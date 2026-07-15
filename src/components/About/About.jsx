@@ -80,9 +80,8 @@ JazakAllahu Khair 🤍`);
                 <h2>Our Mission</h2>
 
                 <p>
-
-                  To provide premium Islamic lifestyle products with trust, honesty and affordability while delivering excellent customer support.
-
+                  {settings?.aboutMission ||
+                    "To provide premium Islamic lifestyle products with trust, honesty and affordability while delivering excellent customer support."}
                 </p>
 
               </div>
@@ -100,9 +99,8 @@ JazakAllahu Khair 🤍`);
                 <h2>Our Vision</h2>
 
                 <p>
-
-                  To become one of India's most trusted Islamic lifestyle brands by offering authentic products and an outstanding customer experience.
-
+                  {settings?.aboutVision ||
+                    "To become one of India's most trusted Islamic lifestyle brands by offering authentic products and an outstanding customer experience."}
                 </p>
 
               </div>

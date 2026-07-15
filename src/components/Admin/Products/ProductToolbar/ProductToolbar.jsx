@@ -1,12 +1,33 @@
+import { useEffect, useState } from "react";
 import {
   Search,
   Plus,
   Filter,
 } from "lucide-react";
 
+import { getCategories } from "../../../../services/categoryService";
+
 import styles from "./ProductToolbar.module.css";
 
-function ProductToolbar({ onAdd }) {
+function ProductToolbar({
+  search,
+  setSearch,
+  category,
+  setCategory,
+  onAdd,
+}) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    getCategories()
+      .then((data) => {
+        if (active) setCategories(data);
+      })
+      .catch((err) => console.error("Failed to load categories in toolbar:", err));
+    return () => { active = false; };
+  }, []);
+
   return (
     <section className={styles.toolbar}>
 
@@ -29,22 +50,23 @@ function ProductToolbar({ onAdd }) {
           <input
             type="text"
             placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
         </div>
 
-        <select className={styles.select}>
-
-          <option>All Categories</option>
-
-          <option>Arabic Perfumes</option>
-
-          <option>Attars</option>
-
-          <option>Bakhoor</option>
-
-          <option>Gift Sets</option>
-
+        <select
+          className={styles.select}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="All Categories">All Categories</option>
+          {(categories.length > 0 ? categories.map(c => c.name) : ["Arabic Perfumes", "Attars", "Bakhoor", "Gift Sets"]).map((catName) => (
+            <option key={catName} value={catName}>
+              {catName}
+            </option>
+          ))}
         </select>
 
         <button

@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
 import Topbar from "../components/Admin/Topbar/Topbar";
+import InactivityWarning from "../components/Admin/InactivityWarning/InactivityWarning";
+import { useInactivityLogout } from "../hooks/useInactivityLogout";
 
 import styles from "./AdminLayout.module.css";
 
 function AdminLayout() {
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
+
+  const { showWarning, secondsLeft, stayLoggedIn } =
+    useInactivityLogout();
 
   return (
     <div className={styles.layout}>
@@ -24,7 +30,7 @@ function AdminLayout() {
           setSidebarOpen={setSidebarOpen}
         />
 
-        <main className={styles.main}>
+        <main className={styles.main} key={location.pathname}>
           <Outlet />
         </main>
 
@@ -36,6 +42,13 @@ function AdminLayout() {
           onClick={() =>
             setSidebarOpen(false)
           }
+        />
+      )}
+
+      {showWarning && (
+        <InactivityWarning
+          secondsLeft={secondsLeft}
+          onStay={stayLoggedIn}
         />
       )}
 

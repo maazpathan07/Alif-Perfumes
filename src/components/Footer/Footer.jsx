@@ -42,10 +42,8 @@ function Footer() {
               </h2>
 
               <p>
-                Premium Arabic perfumes and Islamic lifestyle
-                products crafted with quality, elegance and trust.
-                Experience luxury fragrances delivered with
-                simplicity.
+                {settings?.footerDescription ||
+                  "Premium Arabic perfumes and Islamic lifestyle products crafted with quality, elegance and trust. Experience luxury fragrances delivered with simplicity."}
               </p>
 
             </div>

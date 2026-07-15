@@ -1,0 +1,79 @@
+.card {
+  background: #fff;
+  border: 1px solid rgba(15, 76, 58, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+  min-width: 320px;
+}
+
+.card h2 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 18px;
+  font-weight: 700;
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 10px;
+}
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 450px;
+}
+
+.table th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.statusPending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.statusCompleted {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.statusCancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.date {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+.empty {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-light);
+}

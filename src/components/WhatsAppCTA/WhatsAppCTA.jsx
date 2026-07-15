@@ -5,10 +5,13 @@ import Section from "../UI/Section";
 
 import styles from "./WhatsAppCTA.module.css";
 
-const WHATSAPP_NUMBER = "917874378413";
+import useSettings from "../../hooks/useSettings";
 
 function WhatsAppCTA() {
+  const { settings } = useSettings();
+
   const handleWhatsApp = () => {
+    const number = settings?.whatsapp || "917874378413";
     const message = `🌿 Assalamu Alaikum
 
 I would like to know more about your products.
@@ -18,7 +21,7 @@ Please help me choose the right fragrance.
 JazakAllahu Khair 🤍`;
 
     window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      `https://wa.me/${number}?text=${encodeURIComponent(
         message
       )}`,
       "_blank",

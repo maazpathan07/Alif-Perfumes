@@ -6,8 +6,8 @@
 
   background: linear-gradient(
     180deg,
-    #0f4c3a,
-    #0b3a2c
+    #0b3a2f,
+    #051c17
   );
 
   color: white;
@@ -16,9 +16,10 @@
 
   border-right: 1px solid rgba(255,255,255,.08);
 
-  position: sticky;
+  position: fixed;
   top: 0;
-
+  bottom: 0;
+  left: 0;
   height: 100vh;
 
   transition: transform .35s ease;
@@ -43,21 +44,21 @@
 }
 
 .logo h2 {
-  font-size: 34px;
-
+  font-size: 24px;
   font-weight: 800;
-
   letter-spacing: 2px;
+  color: var(--secondary);
+  font-family: 'Playfair Display', Georgia, serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .logo span {
   display: block;
-
   margin-top: 6px;
-
-  font-size: 13px;
-
-  color: rgba(255,255,255,.7);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* ==========================
@@ -129,10 +130,8 @@
 }
 
 .link:hover {
-  background: rgba(255,255,255,.1);
-
+  background: rgba(200, 169, 106, 0.08);
   color: white;
-
   transform: translateX(4px);
 }
 
@@ -141,17 +140,16 @@
 ========================== */
 
 .active {
-  background: white;
-
-  color: var(--primary);
-
+  background: rgba(200, 169, 106, 0.12);
+  border-left: 4px solid var(--secondary);
+  border-radius: 0 14px 14px 0; /* Keeps a clean right-rounded capsule! */
+  color: var(--secondary) !important;
   font-weight: 700;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,.18);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .active svg {
-  color: var(--primary);
+  color: var(--secondary) !important;
 }
 
 /* ==========================

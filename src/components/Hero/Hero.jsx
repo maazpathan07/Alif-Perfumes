@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+
+
 
 import styles from "./Hero.module.css";
 
@@ -11,8 +12,11 @@ import {
   Reveal,
   Floating,
 } from "../../animations";
+import useSettings from "../../hooks/useSettings";
 
 function Hero() {
+  const { settings } = useSettings();
+
   return (
     <Section>
 
@@ -25,38 +29,40 @@ function Hero() {
           <div className={styles.left}>
 
             <span className={styles.tag}>
-              ✨ Premium Arabic Fragrances
+              ✨ {settings?.tagline || "Premium Arabic Fragrances"}
             </span>
 
             <h1>
-              Luxury Arabic
-              <br />
-              Perfumes
+              {settings?.heroTitle ? (
+                settings.heroTitle.split("\n").map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    {i < settings.heroTitle.split("\n").length - 1 && <br />}
+                  </span>
+                ))
+              ) : (
+                <>
+                  Luxury Arabic
+                  <br />
+                  Perfumes
+                </>
+              )}
             </h1>
 
             <p>
-              Discover authentic Arabic fragrances crafted with premium
-              ingredients. Experience elegance, confidence and
-              long-lasting luxury in every spray.
+              {settings?.heroDescription ||
+                "Discover authentic Arabic fragrances crafted with premium ingredients. Experience elegance, confidence and long-lasting luxury in every spray."}
             </p>
 
             <div className={styles.buttons}>
 
-              <Link to="/products">
+              <Button to="/products">
+                Shop Collection
+              </Button>
 
-                <Button>
-                  Shop Collection
-                </Button>
-
-              </Link>
-
-              <Link to="/about">
-
-                <Button variant="secondary">
-                  Explore
-                </Button>
-
-              </Link>
+              <Button to="/about" variant="secondary">
+                Explore
+              </Button>
 
             </div>
 
@@ -66,10 +72,10 @@ function Hero() {
 
                 <div>
 
-                  <h3>500+</h3>
+                  <h3>{settings?.heroStat1Number || "500+"}</h3>
 
                   <span>
-                    Premium Products
+                    {settings?.heroStat1Label || "Premium Products"}
                   </span>
 
                 </div>
@@ -80,10 +86,10 @@ function Hero() {
 
                 <div>
 
-                  <h3>5000+</h3>
+                  <h3>{settings?.heroStat2Number || "5000+"}</h3>
 
                   <span>
-                    Happy Customers
+                    {settings?.heroStat2Label || "Happy Customers"}
                   </span>
 
                 </div>
@@ -94,10 +100,10 @@ function Hero() {
 
                 <div>
 
-                  <h3>100%</h3>
+                  <h3>{settings?.heroStat3Number || "100%"}</h3>
 
                   <span>
-                    Original Fragrances
+                    {settings?.heroStat3Label || "Original Fragrances"}
                   </span>
 
                 </div>
@@ -121,8 +127,8 @@ function Hero() {
               <div className={styles.imageBox}>
 
                 <img
-                  src={perfume}
-                  alt="Luxury Arabic Perfume"
+                  src={settings?.heroImage || perfume}
+                  alt={settings?.businessName || "Luxury Arabic Perfume"}
                   className={styles.perfume}
                   loading="eager"
                 />

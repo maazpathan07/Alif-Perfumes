@@ -244,21 +244,35 @@
 @media (max-width:576px) {
 
   .hero {
-    gap: 40px;
+    gap: 30px;
+    min-height: auto;
   }
 
   .tag {
-    margin: 0 auto 20px;
+    margin: 0 auto 16px;
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .left h1 {
+    font-size: 32px;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .left p {
-    font-size: 17px;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
   }
 
   .buttons {
     width: 100%;
-
     flex-direction: column;
+    gap: 12px;
+    margin-bottom: 35px;
   }
 
   .buttons a {
@@ -271,20 +285,31 @@
 
   .stats {
     justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   .stats div {
     width: 100%;
-    max-width: 220px;
+    max-width: 200px;
+  }
+
+  .stats h3 {
+    font-size: 24px;
+  }
+
+  .stats span {
+    font-size: 13px;
   }
 
   .imageBox {
-    width: 320px;
-    height: 320px;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto;
   }
 
   .perfume {
-    width: 220px;
+    width: 190px;
   }
 
 }

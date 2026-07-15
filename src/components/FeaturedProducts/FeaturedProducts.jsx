@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import { getProducts } from "../../services/productService";
+import { getFeaturedProducts } from "../../services/productService";
 
 import ProductCard from "../ProductCard/ProductCard";
 import Section from "../UI/Section";
@@ -20,26 +20,25 @@ function FeaturedProducts() {
     useState(true);
 
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    getFeaturedProducts()
+      .then((data) => {
+        if (active) {
+          setProducts(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadProducts() {
-    try {
-      const data =
-        await getProducts();
-
-      setProducts(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   const featuredProducts =
     useMemo(() => {
@@ -47,12 +46,12 @@ function FeaturedProducts() {
       return products
         .filter(
           (product) =>
-            product.featured &&
             product.inStock
         )
         .slice(0, 8);
 
     }, [products]);
+
 
   if (loading) {
     return null;

@@ -86,11 +86,17 @@
    SELECT
 =========================== */
 
-.select {
+.selectBox {
   flex: 1;
-
   min-width: 220px;
   max-width: 260px;
+  height: 56px;
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 100%;
 
   padding: 0 42px 0 18px;
 
@@ -149,14 +155,59 @@
 
   .wrapper{
     flex-direction:column;
+    align-items: stretch;
 
-    margin:30px 0 40px;
+    margin:20px 0 28px;
+    gap: 10px;
   }
 
-  .searchBox,
-  .select{
+  .searchBox{
     width:100%;
     max-width:none;
+    min-width: 0;
+  }
+
+  .search,
+  .select{
+    height: 48px;
+    font-size: 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    box-shadow: none;
+  }
+
+  .search:focus,
+  .select:focus{
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15,76,58,.06);
+  }
+
+  .search{
+    padding: 0 12px 0 40px;
+  }
+
+  .icon{
+    left: 12px;
+  }
+
+  .icon svg{
+    width: 16px;
+    height: 16px;
+  }
+
+  .selectBox{
+    width:100%;
+    max-width:none;
+    min-width: 0;
+    height: 48px;
+  }
+
+  .select{
+    padding: 0 34px 0 12px;
+    background-position:
+      calc(100% - 16px) calc(50% - 3px),
+      calc(100% - 10px) calc(50% - 3px);
+    background-size: 5px 5px;
   }
 
 }

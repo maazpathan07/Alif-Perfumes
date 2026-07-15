@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Pencil,
   Trash2,
+  Star,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -10,7 +11,9 @@ import toast from "react-hot-toast";
 import {
   getCategories,
   deleteCategory,
+  updateCategory,
 } from "../../../../services/categoryService";
+import { deleteImage } from "../../../../services/storageService";
 
 import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import EmptyState from "../../../UI/EmptyState/EmptyState";
@@ -32,37 +35,35 @@ function CategoryTable({ onEdit }) {
     useState(null);
 
   useEffect(() => {
-    loadCategories();
+    let active = true;
+    getCategories()
+      .then((data) => {
+        if (active) {
+          setCategories(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Failed to load categories.");
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadCategories() {
-    try {
-
-      const data =
-        await getCategories();
-
-      setCategories(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-      toast.error(
-        "Failed to load categories."
-      );
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   async function handleDelete() {
-
     if (!deleteId) return;
 
     try {
+      const target = categories.find((c) => c.id === deleteId);
+      if (target?.image) {
+        await deleteImage(target.image);
+      }
 
       await deleteCategory(deleteId);
 
@@ -78,22 +79,50 @@ function CategoryTable({ onEdit }) {
       );
 
     } catch (error) {
-
       console.error(error);
-
       toast.error(
         "Something went wrong."
       );
-
     } finally {
-
       setShowModal(false);
-
       setDeleteId(null);
-
     }
-
   }
+
+  const handleToggleFeatured = async (category) => {
+    const updatedFeatured = !category.featured;
+    try {
+      setCategories((prev) =>
+        prev.map((c) => (c.id === category.id ? { ...c, featured: updatedFeatured } : c))
+      );
+      await updateCategory(category.id, { featured: updatedFeatured });
+      toast.success(updatedFeatured ? `${category.name} is now Featured!` : `${category.name} removed from Featured.`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update featured status.");
+      setCategories((prev) =>
+        prev.map((c) => (c.id === category.id ? { ...c, featured: !updatedFeatured } : c))
+      );
+    }
+  };
+
+  const handleToggleActive = async (category) => {
+    const updatedActive = category.isActive === false ? false : true;
+    const nextVal = !updatedActive;
+    try {
+      setCategories((prev) =>
+        prev.map((c) => (c.id === category.id ? { ...c, isActive: nextVal } : c))
+      );
+      await updateCategory(category.id, { isActive: nextVal });
+      toast.success(`${category.name} is now ${nextVal ? "Active" : "Inactive"}`);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update active status.");
+      setCategories((prev) =>
+        prev.map((c) => (c.id === category.id ? { ...c, isActive: updatedActive } : c))
+      );
+    }
+  };
 
   if (loading) {
     return (
@@ -132,6 +161,8 @@ function CategoryTable({ onEdit }) {
 
               <th>Featured</th>
 
+              <th>Status</th>
+
               <th>Actions</th>
 
             </tr>
@@ -157,24 +188,42 @@ function CategoryTable({ onEdit }) {
 
                 </td>
 
-                <td>{category.name}</td>
+                <td style={{ fontWeight: 600 }}>{category.name}</td>
 
                 <td>{category.description}</td>
 
                 <td>
-
-                  <span
-                    className={
-                      category.featured
-                        ? styles.featured
-                        : styles.notFeatured
-                    }
+                  <button
+                    onClick={() => handleToggleFeatured(category)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center' }}
+                    title={category.featured ? "Remove from Featured" : "Feature on Homepage"}
                   >
-                    {category.featured
-                      ? "Yes"
-                      : "No"}
-                  </span>
+                    <Star
+                      size={20}
+                      fill={category.featured ? "#fbbf24" : "none"}
+                      color={category.featured ? "#fbbf24" : "#94a3b8"}
+                    />
+                  </button>
+                </td>
 
+                <td>
+                  <button
+                    onClick={() => handleToggleActive(category)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    title="Click to toggle Category Visibility"
+                  >
+                    <span
+                      className={
+                        category.isActive !== false
+                          ? styles.featured
+                          : styles.notFeatured
+                      }
+                    >
+                      {category.isActive !== false
+                        ? "Active"
+                        : "Inactive"}
+                    </span>
+                  </button>
                 </td>
 
                 <td>

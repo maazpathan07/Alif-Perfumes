@@ -5,6 +5,8 @@ import {
   updateProduct,
 } from "../../../../services/productService";
 
+import { getCategories } from "../../../../services/categoryService";
+
 import styles from "./ProductForm.module.css";
 
 import {
@@ -17,15 +19,29 @@ import toast from "react-hot-toast";
 function ProductForm({
   product,
   onSuccess,
+  setIsDirty,
 }) {
   const [loading, setLoading] =
     useState(false);
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    getCategories()
+      .then((data) => {
+        if (active) setCategories(data);
+      })
+      .catch((err) => console.error("Failed to load categories in form:", err));
+    return () => { active = false; };
+  }, []);
 
   const [formData, setFormData] =
     useState({
       name: "",
       category: "",
       price: "",
+      discountPrice: "",
       rating: "",
       description: "",
       features: "",
@@ -34,6 +50,32 @@ function ProductForm({
       image: null,
     });
 
+  useEffect(() => {
+    if (!setIsDirty) return;
+
+    let dirty;
+    if (product) {
+      const nameChanged = (formData.name || "") !== (product.name || "");
+      const categoryChanged = (formData.category || "") !== (product.category || "");
+      const priceChanged = String(formData.price || "") !== String(product.price || "");
+      const discountChanged = String(formData.discountPrice || "") !== String(product.discountPrice || "");
+      const ratingChanged = String(formData.rating || "") !== String(product.rating || "");
+      const descriptionChanged = (formData.description || "") !== (product.description || "");
+      const featuresStr = Array.isArray(product.features) ? product.features.join(", ") : product.features || "";
+      const featuresChanged = (formData.features || "") !== featuresStr;
+      const inStockChanged = (formData.inStock ?? true) !== (product.inStock ?? true);
+      const featuredChanged = (formData.featured ?? false) !== (product.featured ?? false);
+      const imageChanged = formData.image instanceof File;
+
+      dirty = nameChanged || categoryChanged || priceChanged || discountChanged || ratingChanged || descriptionChanged || featuresChanged || inStockChanged || featuredChanged || imageChanged;
+    } else {
+      dirty = !!formData.name || !!formData.category || !!formData.price || !!formData.discountPrice || !!formData.rating || !!formData.description || !!formData.features || formData.image instanceof File;
+    }
+
+    setIsDirty(dirty);
+  }, [formData, product, setIsDirty]);
+
+
     const [uploadProgress, setUploadProgress] =
     useState(0);
 
@@ -41,27 +83,24 @@ function ProductForm({
     useState("");
 
   useEffect(() => {
-
     if (!product) return;
 
-    setFormData({
-      name: product.name || "",
-      category: product.category || "",
-      price: product.price || "",
-      rating: product.rating || "",
-      description:
-        product.description || "",
-      features: Array.isArray(product.features)
-          ? product.features.join(", ")
-          : product.features || "",
-      inStock:
-        product.inStock ?? true,
-      featured:
-        product.featured ?? false,
-      image:
-        product.image || null,
+    Promise.resolve().then(() => {
+      setFormData({
+        name: product.name || "",
+        category: product.category || "",
+        price: product.price || "",
+        discountPrice: product.discountPrice || "",
+        rating: product.rating || "",
+        description: product.description || "",
+        features: Array.isArray(product.features)
+            ? product.features.join(", ")
+            : product.features || "",
+        inStock: product.inStock ?? true,
+        featured: product.featured ?? false,
+        image: product.image || null,
+      });
     });
-
   }, [product]);
 
   const handleChange = (e) => {
@@ -104,6 +143,12 @@ function ProductForm({
   setLoading(true);
 
   try {
+    if (formData.discountPrice && Number(formData.discountPrice) >= Number(formData.price)) {
+      toast.error("Discount price must be lower than original price.");
+      setLoading(false);
+      return;
+    }
+
     let imageUrl = product?.image || "";
 
     // Upload new image only if user selected one
@@ -133,6 +178,7 @@ function ProductForm({
           name: formData.name,
           category: formData.category,
           price: Number(formData.price),
+          discountPrice: formData.discountPrice ? Number(formData.discountPrice) : null,
           rating: Number(formData.rating),
           description: formData.description,
           features: formData.features
@@ -224,21 +270,28 @@ function ProductForm({
           <option value="">
             Select Category
           </option>
-
-          <option>Arabic Perfumes</option>
-          <option>Attars</option>
-          <option>Bakhoor</option>
-          <option>Gift Sets</option>
-
+          {(categories.length > 0 ? categories.map(c => c.name) : ["Arabic Perfumes", "Attars", "Bakhoor", "Gift Sets"]).map((catName) => (
+            <option key={catName} value={catName}>
+              {catName}
+            </option>
+          ))}
         </select>
 
         <input
           type="number"
           name="price"
-          placeholder="Price"
+          placeholder="Original Price (₹)"
           value={formData.price}
           onChange={handleChange}
           required
+        />
+
+        <input
+          type="number"
+          name="discountPrice"
+          placeholder="Discount Price (₹) - Optional"
+          value={formData.discountPrice}
+          onChange={handleChange}
         />
 
         <input

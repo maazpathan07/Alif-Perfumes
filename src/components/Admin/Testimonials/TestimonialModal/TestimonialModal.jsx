@@ -7,6 +7,7 @@ function TestimonialModal({
   onClose,
   testimonial,
   onSuccess,
+  setIsDirty,
 }) {
   return (
     <Modal
@@ -21,6 +22,7 @@ function TestimonialModal({
       <TestimonialForm
         testimonial={testimonial}
         onSuccess={onSuccess}
+        setIsDirty={setIsDirty}
       />
     </Modal>
   );

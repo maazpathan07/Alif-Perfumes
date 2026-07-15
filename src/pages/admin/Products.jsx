@@ -14,40 +14,54 @@ function Products() {
   const [refreshKey, setRefreshKey] =
     useState(0);
 
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All Categories");
+
+  const [isDirty, setIsDirty] = useState(false);
+
   const handleAdd = () => {
     setSelectedProduct(null);
-
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleEdit = (product) => {
     setSelectedProduct(product);
-
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleClose = () => {
+    if (isDirty) {
+      const confirm = window.confirm("You have unsaved changes. Are you sure you want to close?");
+      if (!confirm) return;
+    }
     setSelectedProduct(null);
-
     setIsModalOpen(false);
+    setIsDirty(false);
   };
 
   const handleSuccess = () => {
     setIsModalOpen(false);
-
     setSelectedProduct(null);
-
+    setIsDirty(false);
     setRefreshKey((prev) => prev + 1);
   };
 
   return (
     <>
       <ProductToolbar
+        search={search}
+        setSearch={setSearch}
+        category={category}
+        setCategory={setCategory}
         onAdd={handleAdd}
       />
 
       <ProductTable
-        key={refreshKey}
+        key={`${refreshKey}-${search}-${category}`}
+        search={search}
+        category={category}
         onEdit={handleEdit}
       />
 
@@ -56,6 +70,7 @@ function Products() {
         product={selectedProduct}
         onClose={handleClose}
         onSuccess={handleSuccess}
+        setIsDirty={setIsDirty}
       />
     </>
   );

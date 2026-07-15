@@ -6,6 +6,7 @@ function ProductModal({
   onClose,
   product,
   onSuccess,
+  setIsDirty,
 }) {
   return (
     <Modal
@@ -20,6 +21,7 @@ function ProductModal({
       <ProductForm
         product={product}
         onSuccess={onSuccess}
+        setIsDirty={setIsDirty}
       />
     </Modal>
   );

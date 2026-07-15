@@ -14,7 +14,11 @@ import { Reveal, Hover } from "../../animations";
 
 import styles from "./WhyChooseUs.module.css";
 
+import useSettings from "../../hooks/useSettings";
+
 function WhyChooseUs() {
+  const { settings } = useSettings();
+
   const features = useMemo(
     () => [
       {
@@ -24,8 +28,8 @@ function WhyChooseUs() {
             strokeWidth={2}
           />
         ),
-        title: "Premium Quality",
-        text: "Luxury fragrances crafted using carefully selected premium ingredients.",
+        title: settings?.wcuCard1Title || "Premium Quality",
+        text: settings?.wcuCard1Desc || "Luxury fragrances crafted using carefully selected premium ingredients.",
       },
 
       {
@@ -35,8 +39,8 @@ function WhyChooseUs() {
             strokeWidth={2}
           />
         ),
-        title: "Long Lasting",
-        text: "Rich fragrances designed to stay fresh and elegant throughout the day.",
+        title: settings?.wcuCard2Title || "Long Lasting",
+        text: settings?.wcuCard2Desc || "Rich fragrances designed to stay fresh and elegant throughout the day.",
       },
 
       {
@@ -46,8 +50,8 @@ function WhyChooseUs() {
             strokeWidth={2}
           />
         ),
-        title: "100% Original",
-        text: "Authentic products sourced directly with complete quality assurance.",
+        title: settings?.wcuCard3Title || "100% Original",
+        text: settings?.wcuCard3Desc || "Authentic products sourced directly with complete quality assurance.",
       },
 
       {
@@ -57,19 +61,19 @@ function WhyChooseUs() {
             strokeWidth={2}
           />
         ),
-        title: "WhatsApp Support",
-        text: "Quick ordering and instant customer support directly on WhatsApp.",
+        title: settings?.wcuCard4Title || "WhatsApp Support",
+        text: settings?.wcuCard4Desc || "Quick ordering and instant customer support directly on WhatsApp.",
       },
     ],
-    []
+    [settings]
   );
 
   return (
     <Section>
 
       <Title
-        title="Why Choose Alif Perfumes"
-        subtitle="Premium fragrances crafted for elegance, luxury and confidence."
+        title={settings?.wcuTitle || "Why Choose Alif Perfumes"}
+        subtitle={settings?.wcuSubtitle || "Premium fragrances crafted for elegance, luxury and confidence."}
       />
 
       <div className={styles.grid}>

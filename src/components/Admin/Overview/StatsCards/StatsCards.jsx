@@ -6,8 +6,8 @@ import {
 import {
   Package,
   Grid2X2,
-  Star,
-  TrendingUp,
+  ShoppingCart,
+  MessageSquare,
 } from "lucide-react";
 
 import { getDashboardStats } from "../../../../services/dashboardService";
@@ -19,26 +19,26 @@ function StatsCards() {
     useState({
       totalProducts: 0,
       totalCategories: 0,
-      featuredProducts: 0,
+      totalOrders: 0,
+      totalTestimonials: 0,
     });
 
   useEffect(() => {
-    loadStats();
+    let active = true;
+    getDashboardStats()
+      .then((data) => {
+        if (active) {
+          setStats(data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadStats() {
-    try {
-      const data =
-        await getDashboardStats();
-
-      setStats(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-    }
-  }
 
   const cards = [
     {
@@ -52,14 +52,14 @@ function StatsCards() {
       icon: <Grid2X2 size={28} />,
     },
     {
-      title: "Featured",
-      value: stats.featuredProducts,
-      icon: <Star size={28} />,
+      title: "Enquiries (WhatsApp)",
+      value: stats.totalOrders,
+      icon: <ShoppingCart size={28} />,
     },
     {
-      title: "Growth",
-      value: "--",
-      icon: <TrendingUp size={28} />,
+      title: "Testimonials",
+      value: stats.totalTestimonials,
+      icon: <MessageSquare size={28} />,
     },
   ];
 

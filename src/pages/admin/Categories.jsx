@@ -14,24 +14,34 @@ function Categories() {
   const [refreshKey, setRefreshKey] =
     useState(0);
 
+  const [isDirty, setIsDirty] = useState(false);
+
   const handleAdd = () => {
     setSelectedCategory(null);
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleEdit = (category) => {
     setSelectedCategory(category);
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleClose = () => {
+    if (isDirty) {
+      const confirm = window.confirm("You have unsaved changes. Are you sure you want to close?");
+      if (!confirm) return;
+    }
     setSelectedCategory(null);
     setIsModalOpen(false);
+    setIsDirty(false);
   };
 
   const handleSuccess = () => {
     setSelectedCategory(null);
     setIsModalOpen(false);
+    setIsDirty(false);
 
     setRefreshKey((prev) => prev + 1);
   };
@@ -52,6 +62,7 @@ function Categories() {
         category={selectedCategory}
         onClose={handleClose}
         onSuccess={handleSuccess}
+        setIsDirty={setIsDirty}
       />
     </>
   );

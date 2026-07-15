@@ -18,7 +18,7 @@ import {
 } from "../../animations";
 
 import {
-  getProducts,
+  getProductById,
 } from "../../services/productService";
 
 import {
@@ -37,34 +37,26 @@ function ProductDetails() {
     useState(null);
 
   useEffect(() => {
-    loadProduct();
+    let active = true;
+    getProductById(id)
+      .then((selected) => {
+        if (active) {
+          setProduct(selected);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, [id]);
 
-  async function loadProduct() {
-    try {
 
-      const products =
-        await getProducts();
-
-      const selected =
-        products.find(
-          (item) =>
-            String(item.id) ===
-            String(id)
-        );
-
-      setProduct(selected || null);
-
-    } catch (error) {
-
-      console.error(error);
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   if (loading) {
     return (
@@ -230,9 +222,8 @@ function ProductDetails() {
       </Section>
 
       <RelatedProducts
-        currentProductId={
-          product.id
-        }
+        currentProductId={product.id}
+        category={product.category}
       />
     </>
   );

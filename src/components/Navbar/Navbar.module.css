@@ -1,8 +1,10 @@
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
+
 
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
@@ -298,12 +300,16 @@
   }
 
   .logo img {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
   }
 
   .logo span {
-    font-size: 21px;
+    font-size: 18px;
+  }
+
+  .logo {
+    gap: 10px;
   }
 
 }

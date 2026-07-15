@@ -14,24 +14,34 @@ function Testimonials() {
   const [refreshKey, setRefreshKey] =
     useState(0);
 
+  const [isDirty, setIsDirty] = useState(false);
+
   const handleAdd = () => {
     setSelectedTestimonial(null);
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleEdit = (testimonial) => {
     setSelectedTestimonial(testimonial);
+    setIsDirty(false);
     setIsModalOpen(true);
   };
 
   const handleClose = () => {
+    if (isDirty) {
+      const confirm = window.confirm("You have unsaved changes. Are you sure you want to close?");
+      if (!confirm) return;
+    }
     setSelectedTestimonial(null);
     setIsModalOpen(false);
+    setIsDirty(false);
   };
 
   const handleSuccess = () => {
     setSelectedTestimonial(null);
     setIsModalOpen(false);
+    setIsDirty(false);
 
     setRefreshKey((prev) => prev + 1);
   };
@@ -52,6 +62,7 @@ function Testimonials() {
         testimonial={selectedTestimonial}
         onClose={handleClose}
         onSuccess={handleSuccess}
+        setIsDirty={setIsDirty}
       />
     </>
   );

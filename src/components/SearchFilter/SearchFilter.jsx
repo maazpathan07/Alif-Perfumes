@@ -43,54 +43,52 @@ function SearchFilter({
 
         {/* Category */}
 
-        <select
-          className={styles.select}
-          value={category}
-          onChange={(e) =>
-            setCategory(e.target.value)
-          }
-          aria-label="Select Category"
-        >
-
-          {categories.map((item) => (
-            <option
-              key={item}
-              value={item}
-            >
-              {item}
-            </option>
-          ))}
-
-        </select>
+        <div className={styles.selectBox}>
+          <select
+            className={styles.select}
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
+            aria-label="Select Category"
+          >
+            {categories.map((item) => (
+              <option
+                key={item}
+                value={item}
+              >
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* Sort */}
 
-        <select
-          className={styles.select}
-          value={sort}
-          onChange={(e) =>
-            setSort(e.target.value)
-          }
-          aria-label="Sort Products"
-        >
+        <div className={styles.selectBox}>
+          <select
+            className={styles.select}
+            value={sort}
+            onChange={(e) =>
+              setSort(e.target.value)
+            }
+            aria-label="Sort Products"
+          >
+            <option value="Sort By">
+              Sort By
+            </option>
+            <option value="Price: Low to High">
+              Price: Low to High
+            </option>
+            <option value="Price: High to Low">
+              Price: High to Low
+            </option>
+            <option value="Highest Rating">
+              Highest Rating
+            </option>
+          </select>
+        </div>
 
-          <option value="Sort By">
-            Sort By
-          </option>
-
-          <option value="Price: Low to High">
-            Price: Low to High
-          </option>
-
-          <option value="Price: High to Low">
-            Price: High to Low
-          </option>
-
-          <option value="Highest Rating">
-            Highest Rating
-          </option>
-
-        </select>
 
       </div>
 

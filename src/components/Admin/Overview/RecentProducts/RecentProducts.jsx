@@ -7,26 +7,26 @@ import { getProducts } from "../../../../services/productService";
 
 import styles from "./RecentProducts.module.css";
 
-import EmptyState from "../../../UI/EmptyState/EmptyState";
-
 function RecentProducts() {
   const [products, setProducts] =
     useState([]);
 
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    getProducts()
+      .then((data) => {
+        if (active) {
+          setProducts(data.slice(0, 5));
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadProducts() {
-    try {
-      const data = await getProducts();
-
-      setProducts(data.slice(0, 5));
-
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <div className={styles.card}>
@@ -36,41 +36,26 @@ function RecentProducts() {
       {products.length === 0 ? (
         <p>No Products Found</p>
       ) : (
-        <table className={styles.table}>
-
-          <thead>
-
-            <tr>
-
-              <th>Name</th>
-
-              <th>Category</th>
-
-              <th>Price</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {products.map((product) => (
-
-              <tr key={product.id}>
-
-                <td>{product.name}</td>
-
-                <td>{product.category}</td>
-
-                <td>₹{product.price}</td>
-
+        <div className={styles.tableResponsive}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
               </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{product.category}</td>
+                  <td>₹{product.price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
     </div>

@@ -10,23 +10,33 @@ background:white;
 padding:25px;
 border-radius:18px;
 border:1px solid var(--border);
-transition:.3s;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-5px);
+border-color: rgba(200, 169, 106, 0.35);
+box-shadow: 0 10px 25px rgba(15, 76, 58, 0.05);
 }
 
 .icon{
 width:60px;
 height:60px;
 border-radius:16px;
-background:#f3f4f6;
+background: rgba(15, 76, 58, 0.05);
+border: 1px solid rgba(200, 169, 106, 0.15);
 display:flex;
 align-items:center;
 justify-content:center;
 margin-bottom:20px;
 color:var(--primary);
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .icon{
+background: var(--primary);
+color: var(--secondary) !important;
+border-color: var(--secondary);
 }
 
 .card h2{

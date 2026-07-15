@@ -1,0 +1,293 @@
+.wrapper {
+  padding: 10px 0;
+}
+
+.pageHeader {
+  margin-bottom: 30px;
+}
+
+.pageHeader h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.pageHeader p {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* ======================================
+   Metrics Grid
+====================================== */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.metricCard {
+  background: #fff;
+  border: 1px solid rgba(15, 76, 58, 0.08);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-2px);
+}
+
+.metricIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pendingIcon {
+  background: rgba(217, 119, 6, 0.1);
+  color: #d97706;
+}
+
+.completedIcon {
+  background: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+}
+
+.totalIcon {
+  background: rgba(15, 76, 58, 0.1);
+  color: var(--primary);
+}
+
+.metricInfo h4 {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.metricInfo h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* ======================================
+   Toolbar Controls
+====================================== */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.toolbar h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  height: 42px;
+  width: 240px;
+}
+
+.searchBox input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+}
+
+.select {
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 12px;
+  outline: none;
+  font-size: 14px;
+  background: #fff;
+}
+
+/* ======================================
+   Table Styling
+====================================== */
+.tableWrapper {
+  background: #fff;
+  border: 1px solid rgba(15, 76, 58, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: rgba(15, 76, 58, 0.04);
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  border-bottom: 1.5px solid var(--border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 16px 20px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.productCell img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px solid var(--border);
+}
+
+.productName {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.statusPending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.statusCompleted {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.statusCancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.actionBtn:hover {
+  background: #e2e8f0;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.date {
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+/* ======================================
+   Empty State
+====================================== */
+.empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.empty h3 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.empty p {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* ======================================
+   Mobile
+====================================== */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls {
+    width: 100%;
+  }
+  .searchBox {
+    flex: 1;
+    width: auto;
+  }
+}

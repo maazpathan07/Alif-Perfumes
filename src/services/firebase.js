@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  browserSessionPersistence,
+  setPersistence,
+} from "firebase/auth";
 
 import {
   getFirestore,
@@ -15,6 +19,9 @@ import firebaseConfig from "../config/firebaseConfig";
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
+// Tab band ho to logout — har baar login karna padega
+setPersistence(auth, browserSessionPersistence);
 
 const db = getFirestore(app);
 

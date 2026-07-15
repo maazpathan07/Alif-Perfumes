@@ -9,6 +9,7 @@ import SearchFilter from "../components/SearchFilter/SearchFilter";
 import ProductGrid from "../components/ProductGrid/ProductGrid";
 import Section from "../components/UI/Section";
 import Button from "../components/Button/Button";
+import EmptyState from "../components/UI/EmptyState/EmptyState";
 
 import { getProducts } from "../services/productService";
 
@@ -33,25 +34,25 @@ function Products() {
     useState("Sort By");
 
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    getProducts()
+      .then((data) => {
+        if (active) {
+          setProducts(data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (active) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
-  async function loadProducts() {
-    try {
-      const data = await getProducts();
-
-      setProducts(data);
-
-    } catch (error) {
-
-      console.error(error);
-
-    } finally {
-
-      setLoading(false);
-
-    }
-  }
 
   const filteredProducts =
     useMemo(() => {
