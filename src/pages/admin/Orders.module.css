@@ -30,13 +30,13 @@
 
 .metricCard {
   background: #fff;
-  border: 1px solid rgba(15, 76, 58, 0.08);
+  border: 1px solid rgba(26, 122, 88, 0.1);
   border-radius: 16px;
   padding: 22px;
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 12px rgba(26, 122, 88, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .totalIcon {
-  background: rgba(15, 76, 58, 0.1);
+  background: rgba(26, 122, 88, 0.1);
   color: var(--primary);
 }
 
@@ -139,10 +139,10 @@
 ====================================== */
 .tableWrapper {
   background: #fff;
-  border: 1px solid rgba(15, 76, 58, 0.08);
+  border: 1px solid rgba(26, 122, 88, 0.1);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 12px rgba(26, 122, 88, 0.05);
 }
 
 .tableResponsive {
@@ -158,22 +158,28 @@
 }
 
 .table th {
-  background: rgba(15, 76, 58, 0.04);
+  background: rgba(26, 122, 88, 0.06);
   padding: 16px 20px;
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--primary);
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 1px solid rgba(26, 122, 88, 0.1);
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 .table td {
-  padding: 16px 20px;
+  padding: 15px 20px;
   font-size: 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(26, 122, 88, 0.05);
   color: var(--text);
   vertical-align: middle;
+}
+
+.table tr:hover td {
+  background: rgba(26, 122, 88, 0.02);
 }
 
 .productCell {

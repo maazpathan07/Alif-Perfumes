@@ -61,6 +61,7 @@ function Sidebar({
         sidebarOpen ? styles.open : ""
       }`}
     >
+      {/* Logo */}
       <div className={styles.logo}>
 
         <button
@@ -68,9 +69,12 @@ function Sidebar({
           onClick={() =>
             setSidebarOpen(false)
           }
+          aria-label="Close menu"
         >
-          <X size={24} />
+          <X size={20} />
         </button>
+
+        <div className={styles.logoIcon}>A</div>
 
         <h2>ALIF PERFUMES</h2>
 
@@ -78,6 +82,7 @@ function Sidebar({
 
       </div>
 
+      {/* Navigation */}
       <nav className={styles.nav}>
 
         {menuItems.map((item) => (
@@ -104,6 +109,17 @@ function Sidebar({
         ))}
 
       </nav>
+
+      {/* Footer Status Badge */}
+      <div className={styles.footer}>
+        <div className={styles.footerBadge}>
+          <div className={styles.footerDot} />
+          <div className={styles.footerText}>
+            <strong>Alif Perfumes</strong>
+            System Active
+          </div>
+        </div>
+      </div>
 
     </aside>
   );

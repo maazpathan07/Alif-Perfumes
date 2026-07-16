@@ -4,9 +4,16 @@
      COLORS
   ========================== */
 
-  --primary: #0F4C3A;
-  --primary-light: #16684F;
-  --primary-dark: #0A382B;
+  --primary: #1a7a58;
+  --primary-light: #25a072;
+  --primary-dark: #12573f;
+
+  /* Admin Panel Light Theme */
+  --admin-bg: #f2fdf9;
+  --admin-sidebar-from: #1e8a65;
+  --admin-sidebar-to: #145c44;
+  --admin-card-border: rgba(26, 122, 88, 0.1);
+  --admin-tint: rgba(26, 122, 88, 0.06);
 
   --secondary: #C8A96A;
   --secondary-light: #D8BA80;

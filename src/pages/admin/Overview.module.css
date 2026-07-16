@@ -1,0 +1,46 @@
+/* ===========================
+   Overview Page Layout
+=========================== */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===========================
+   Bottom Row (Products + Orders)
+=========================== */
+
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px) {
+  .bottomRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 576px) {
+  .page {
+    gap: 16px;
+  }
+
+  .bottomRow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

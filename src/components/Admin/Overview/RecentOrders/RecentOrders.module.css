@@ -1,79 +1,130 @@
+/* ===========================
+   Card
+=========================== */
+
 .card {
-  background: #fff;
-  border: 1px solid rgba(15, 76, 58, 0.08);
-  border-radius: 16px;
+  background: white;
+
   padding: 24px;
-  box-shadow: var(--shadow-sm);
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(26, 122, 88, 0.1);
+
+  box-shadow: 0 2px 12px rgba(26, 122, 88, 0.04);
+
   flex: 1;
-  min-width: 320px;
+
+  min-width: 0;
 }
 
 .card h2 {
-  font-size: 18px;
-  color: var(--primary);
-  margin-bottom: 18px;
+  font-size: 16px;
   font-weight: 700;
-  border-bottom: 1.5px solid var(--border);
-  padding-bottom: 10px;
+  color: var(--primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid rgba(26, 122, 88, 0.08);
 }
+
+/* ===========================
+   Table
+=========================== */
 
 .tableResponsive {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 450px;
+  min-width: 380px;
 }
 
 .table th {
   text-align: left;
   padding: 10px 14px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text-light);
-  border-bottom: 1px solid var(--border);
+  color: var(--primary);
+  background: rgba(26, 122, 88, 0.05);
+  border-bottom: 1px solid rgba(26, 122, 88, 0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table th:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.table th:last-child {
+  border-radius: 0 8px 8px 0;
 }
 
 .table td {
   padding: 12px 14px;
   font-size: 13px;
   color: var(--text);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(26, 122, 88, 0.05);
 }
 
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: rgba(26, 122, 88, 0.02);
+}
+
+/* ===========================
+   Status Badges
+=========================== */
+
 .status {
-  display: inline-block;
-  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
   border-radius: 99px;
   font-size: 11px;
   font-weight: 600;
 }
 
 .statusPending {
-  background: #fef3c7;
-  color: #d97706;
+  background: #fef9e7;
+  color: #b8860b;
+  border: 1px solid #f9e4a0;
 }
 
 .statusCompleted {
-  background: #dcfce7;
-  color: #16a34a;
+  background: #e8fdf3;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
 }
 
 .statusCancelled {
-  background: #fee2e2;
+  background: #fff0f0;
   color: #dc2626;
+  border: 1px solid #fecaca;
 }
+
+/* ===========================
+   Date
+=========================== */
 
 .date {
   color: var(--text-light);
   font-size: 12px;
 }
 
+/* ===========================
+   Empty State
+=========================== */
+
 .empty {
   text-align: center;
-  padding: 20px 0;
+  padding: 30px 0;
   color: var(--text-light);
+  font-size: 14px;
 }

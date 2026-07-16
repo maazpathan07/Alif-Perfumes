@@ -3,7 +3,7 @@
 
   min-height: 100vh;
 
-  background: #f9f8f5;
+  background: #eef9f5;
 
   position: relative;
 }
@@ -17,7 +17,7 @@
 
   min-width: 0;
 
-  margin-left: 270px;
+  margin-left: 265px;
 }
 
 @keyframes fadeInSlide {
@@ -34,7 +34,7 @@
 .main {
   flex: 1;
 
-  padding: 102px 30px 30px;
+  padding: 96px 30px 30px;
 
   overflow-x: auto;
 
@@ -58,7 +58,7 @@
 @media (max-width:992px){
 
   .content {
-    margin-left: 90px;
+    margin-left: 80px;
   }
 
   .main{
