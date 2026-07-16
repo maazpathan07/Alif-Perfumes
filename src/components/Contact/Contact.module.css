@@ -28,8 +28,8 @@
 
   background: radial-gradient(
     circle,
-    rgba(15, 76, 58, 0.08),
-    rgba(200, 169, 106, 0.05),
+    rgba(26, 122, 88, 0.06),
+    rgba(200, 169, 106, 0.04),
     transparent 70%
   );
 
@@ -51,7 +51,9 @@
 
   border-radius: var(--radius-full);
 
-  background: rgba(15, 76, 58, 0.08);
+  background: rgba(26, 122, 88, 0.06);
+
+  border: 1px solid rgba(26, 122, 88, 0.1);
 
   color: var(--primary);
 
@@ -113,13 +115,13 @@
 .card {
   padding: 24px;
 
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.72);
 
-  border: 1px solid rgba(15, 76, 58, 0.08);
+  border: 1px solid rgba(26, 122, 88, 0.1);
 
   border-radius: var(--radius-lg);
 
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 16px rgba(26, 122, 88, 0.02);
 
   transition: all var(--transition);
 }
@@ -166,13 +168,13 @@
 .form {
   padding: 36px;
 
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.72);
 
-  border: 1px solid rgba(15, 76, 58, 0.08);
+  border: 1px solid rgba(26, 122, 88, 0.1);
 
   border-radius: var(--radius-lg);
 
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 16px rgba(26, 122, 88, 0.02);
 }
 
 .form h2 {
@@ -208,7 +210,7 @@
 .form textarea:focus {
   border-color: var(--primary);
 
-  box-shadow: 0 0 0 4px rgba(15, 76, 58, .08);
+  box-shadow: 0 0 0 4px rgba(26, 122, 88, 0.1);
 }
 
 .form textarea {
@@ -228,7 +230,7 @@
   margin-top: 30px;
   padding-top: 28px;
 
-  border-top: 1px solid rgba(15, 76, 58, .08);
+  border-top: 1px solid rgba(26, 122, 88, 0.1);
 
   display: grid;
   gap: 20px;
