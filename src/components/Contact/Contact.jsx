@@ -14,6 +14,7 @@ import Button from "../Button/Button";
 import { Reveal, Hover } from "../../animations";
 
 import useSettings from "../../hooks/useSettings";
+import { createOrder } from "../../services/orderService";
 
 import styles from "./Contact.module.css";
 
@@ -25,6 +26,18 @@ function Contact() {
   const [message, setMessage] = useState("");
 
   const handleWhatsApp = () => {
+    // Log contact enquiry to Firestore in background
+    try {
+      createOrder({
+        productId: "contact_enquiry",
+        productName: `Message from ${name || "Guest"} (Phone: ${phone || "N/A"})`,
+        price: 0,
+        image: ""
+      });
+    } catch (error) {
+      console.error("Failed to save contact log to database:", error);
+    }
+
     const number =
       settings?.whatsapp || "";
 
