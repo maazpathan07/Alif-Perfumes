@@ -5,13 +5,12 @@
   width: 100%;
   z-index: 1000;
 
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border-bottom: 1px solid rgba(15, 76, 58, 0.08);
-  box-shadow: 0 8px 30px rgba(15, 76, 58, 0.06);
+  border-bottom: 1px solid rgba(26, 122, 88, 0.1);
+  box-shadow: 0 8px 32px rgba(26, 122, 88, 0.04);
 
   transition: all var(--transition);
   will-change: backdrop-filter, transform;
@@ -31,36 +30,39 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   text-decoration: none;
+  min-width: 0;
 }
 
 .logo img {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
-
-  transition:
-    transform .35s ease,
-    filter .35s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 4px 8px rgba(26, 122, 88, 0.1));
 }
 
 .logo:hover img {
-  transform: scale(1.06);
-  filter: drop-shadow(0 10px 18px rgba(15, 76, 58, .18));
+  transform: scale(1.08) rotate(3deg);
+  filter: drop-shadow(0 8px 16px rgba(26, 122, 88, 0.2));
 }
 
 .logo span {
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
   color: var(--primary);
-
-  transition: color .3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logo:hover span {
-  color: var(--primary);
+  color: var(--primary-light);
 }
 
 /* =========================
@@ -70,27 +72,21 @@
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 32px;
 }
 
 .navLinks a {
   position: relative;
-
   text-decoration: none;
-
   color: var(--text);
-
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-
-  transition:
-    color .3s ease,
-    transform .3s ease;
+  transition: all 0.3s ease;
 }
 
 .navLinks a:hover {
   color: var(--primary);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .navLinks :global(.active) {
@@ -99,26 +95,19 @@
 
 .navLinks a::after {
   content: "";
-
   position: absolute;
-
   left: 50%;
-  bottom: -8px;
-
+  bottom: -6px;
   transform: translateX(-50%);
-
   width: 0;
-  height: 3px;
-
-  border-radius: 50px;
-
+  height: 2.5px;
+  border-radius: 99px;
   background: linear-gradient(
     90deg,
     var(--primary),
     var(--secondary)
   );
-
-  transition: width .35s ease;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navLinks a:hover::after,
@@ -128,21 +117,19 @@
 
 /* =========================
    DESKTOP BUTTON
-========================= */
+======================== */
 
 .desktopButton {
   display: flex;
 }
 
 .desktopButton button {
-  transition: all var(--transition);
+  transition: all var(--transition-fast);
 }
 
 .desktopButton button:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 14px 30px rgba(37, 211, 102, .22);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
 }
 
 /* =========================
@@ -151,34 +138,27 @@
 
 .menuButton {
   display: none;
-
   align-items: center;
   justify-content: center;
-
-  width: 46px;
-  height: 46px;
-
-  background: transparent;
-  border: none;
-
+  width: 44px;
+  height: 44px;
+  background: rgba(26, 122, 88, 0.05);
+  border: 1px solid rgba(26, 122, 88, 0.1);
+  border-radius: 12px;
   color: var(--primary);
-
   cursor: pointer;
-
-  transition: .3s ease;
+  transition: all 0.3s ease;
 }
 
 .menuButton svg {
-  width: 28px;
-  height: 28px;
-
-  stroke-width: 2.4;
-
-  transition: transform .3s ease;
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.2;
 }
 
-.menuButton:hover svg {
-  transform: rotate(90deg);
+.menuButton:hover {
+  background: rgba(26, 122, 88, 0.1);
+  transform: scale(1.05);
 }
 
 /* =========================
@@ -186,35 +166,22 @@
 ========================= */
 
 .mobileMenu {
-
   position: fixed;
-
   top: 88px;
   right: -100%;
-
-  width: 300px;
-
+  width: 290px;
   height: calc(100vh - 88px);
-
-  padding: 40px 30px;
-
+  padding: 35px 25px;
   display: flex;
   flex-direction: column;
-
-  gap: 25px;
-
-  background: rgba(255,255,255,.96);
-
+  gap: 22px;
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-
-  box-shadow: -15px 0 40px rgba(0,0,0,.08);
-
+  border-left: 1px solid rgba(26, 122, 88, 0.1);
+  box-shadow: -10px 0 35px rgba(26, 122, 88, 0.05);
   opacity: 0;
-
-  transition:
-    right .35s ease,
-    opacity .35s ease;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
 }
 
 .show {
@@ -223,39 +190,35 @@
 }
 
 .mobileMenu a {
-
   text-decoration: none;
-
   color: var(--text);
-
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-
-  transition: all .3s ease;
+  transition: all 0.25s ease;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 .mobileMenu a:hover {
-
   color: var(--primary);
-
-  transform: translateX(8px);
-
+  background: rgba(26, 122, 88, 0.05);
+  transform: translateX(4px);
 }
 
 .mobileMenu :global(.active) {
   color: var(--primary);
+  background: rgba(26, 122, 88, 0.06);
 }
 
 .mobileMenu button {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 /* =========================
    TABLET
 ========================= */
 
-@media (max-width:992px) {
-
+@media (max-width: 992px) {
   .navLinks {
     display: none;
   }
@@ -265,43 +228,38 @@
   }
 
   .menuButton {
-    display: block;
+    display: flex;
   }
 
   .logo img {
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
   }
 
   .logo span {
-    font-size: 26px;
+    font-size: 22px;
   }
-
 }
 
 /* =========================
    MOBILE
 ========================= */
 
-@media (max-width:576px) {
-
+@media (max-width: 576px) {
   .navbar :global(.container) {
     height: 75px;
   }
 
   .mobileMenu {
-
     top: 75px;
-
     width: 100%;
-
     height: calc(100vh - 75px);
-
+    border-left: none;
   }
 
   .logo img {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
   }
 
   .logo span {
@@ -309,25 +267,13 @@
   }
 
   .logo {
-    gap: 10px;
+    gap: 8px;
   }
-
 }
 
 .desktopButton button svg,
 .mobileMenu button svg {
   width: 18px;
   height: 18px;
-
   flex-shrink: 0;
-}
-
-.logo{
-  min-width:0;
-}
-
-.logo span{
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
 }

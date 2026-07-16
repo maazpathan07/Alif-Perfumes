@@ -26,14 +26,19 @@ body {
   background:
     radial-gradient(
       circle at top right,
-      rgba(15, 76, 58, .05),
+      rgba(26, 122, 88, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(200, 169, 106, 0.04),
       transparent 35%
     ),
-    #fafaf8;
+    #fbfbfa;
 
   color: var(--text);
 
-  font-family: Inter, Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
 
   overflow-x: hidden;
 
@@ -41,6 +46,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 /* ===========================
