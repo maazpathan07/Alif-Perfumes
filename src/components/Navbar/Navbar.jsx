@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   MessageCircle,
   Menu,
   X,
+  Search,
 } from "lucide-react";
 
 import Button from "../Button/Button";
@@ -15,8 +16,17 @@ import styles from "./Navbar.module.css";
 import defaultLogo from "../../assets/logos/logo.png";
 
 function Navbar() {
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchVal, setSearchVal] = useState("");
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!searchVal.trim()) return;
+    navigate(`/products?search=${encodeURIComponent(searchVal.trim())}`);
+    setSearchVal("");
+    setMenuOpen(false);
+  };
 
   const { settings } =
     useSettings();
@@ -121,6 +131,20 @@ function Navbar() {
 
         </nav>
 
+        {/* Desktop Search */}
+        <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
+          <input
+            type="text"
+            placeholder="Search perfumes..."
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+            className={styles.searchInput}
+          />
+          <button type="submit" className={styles.searchBtn} aria-label="Search">
+            <Search size={16} />
+          </button>
+        </form>
+
         {/* Desktop WhatsApp */}
 
         <div
@@ -176,6 +200,20 @@ function Navbar() {
               : ""
           }`}
         >
+
+          {/* Mobile Search */}
+          <form onSubmit={handleSearchSubmit} className={styles.mobileSearchForm}>
+            <input
+              type="text"
+              placeholder="Search perfumes..."
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+              className={styles.mobileSearchInput}
+            />
+            <button type="submit" className={styles.mobileSearchBtn} aria-label="Search">
+              <Search size={16} />
+            </button>
+          </form>
 
           <NavLink
             to="/"

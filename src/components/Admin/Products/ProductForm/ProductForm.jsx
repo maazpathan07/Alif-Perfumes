@@ -45,6 +45,9 @@ function ProductForm({
       rating: "",
       description: "",
       features: "",
+      topNotes: "",
+      middleNotes: "",
+      baseNotes: "",
       inStock: true,
       featured: false,
       image: null,
@@ -96,6 +99,9 @@ function ProductForm({
         features: Array.isArray(product.features)
             ? product.features.join(", ")
             : product.features || "",
+        topNotes: product.topNotes || "",
+        middleNotes: product.middleNotes || "",
+        baseNotes: product.baseNotes || "",
         inStock: product.inStock ?? true,
         featured: product.featured ?? false,
         image: product.image || null,
@@ -131,6 +137,9 @@ function ProductForm({
       rating: "",
       description: "",
       features: "",
+      topNotes: "",
+      middleNotes: "",
+      baseNotes: "",
       inStock: true,
       featured: false,
       image: null,
@@ -188,6 +197,9 @@ function ProductForm({
              .split(",")
              .map((item) => item.trim())
             : [],
+          topNotes: formData.topNotes || "",
+          middleNotes: formData.middleNotes || "",
+          baseNotes: formData.baseNotes || "",
           inStock: formData.inStock,
           featured: formData.featured,
           image: imageUrl,
@@ -304,6 +316,30 @@ function ProductForm({
           value={formData.rating}
           onChange={handleChange}
           required
+        />
+
+        <input
+          type="text"
+          name="topNotes"
+          placeholder="Top Notes (e.g. Lavender, Rose)"
+          value={formData.topNotes}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          name="middleNotes"
+          placeholder="Middle/Heart Notes (e.g. Amber, Patchouli)"
+          value={formData.middleNotes}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          name="baseNotes"
+          placeholder="Base Notes (e.g. Sandalwood, Musk, Oud)"
+          value={formData.baseNotes}
+          onChange={handleChange}
         />
 
       </div>

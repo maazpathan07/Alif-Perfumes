@@ -168,6 +168,32 @@ function ProductDetails() {
                 {product.description}
               </p>
 
+              {(product.topNotes || product.middleNotes || product.baseNotes) && (
+                <div className={styles.notesSection}>
+                  <h3>Fragrance Profile</h3>
+                  <div className={styles.notesGrid}>
+                    {product.topNotes && (
+                      <div className={styles.noteCard}>
+                        <span className={styles.noteLabel}>Top Notes</span>
+                        <p>{product.topNotes}</p>
+                      </div>
+                    )}
+                    {product.middleNotes && (
+                      <div className={styles.noteCard}>
+                        <span className={styles.noteLabel}>Heart Notes</span>
+                        <p>{product.middleNotes}</p>
+                      </div>
+                    )}
+                    {product.baseNotes && (
+                      <div className={styles.noteCard}>
+                        <span className={styles.noteLabel}>Base Notes</span>
+                        <p>{product.baseNotes}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <ul>
 
                 {(Array.isArray(product.features)

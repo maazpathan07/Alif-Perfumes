@@ -281,3 +281,67 @@
   }
 
 }
+
+/* Fragrance Notes Profile */
+.notesSection {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.notesSection h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.notesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.noteCard {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(26, 122, 88, 0.1);
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(26, 122, 88, 0.02);
+}
+
+.noteLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  color: var(--secondary-dark);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.noteCard p {
+  margin: 0 !important;
+  font-size: 13px !important;
+  color: var(--text) !important;
+  line-height: 1.4 !important;
+  font-weight: 500;
+}
+
+@media (max-width: 992px) {
+  .notesSection {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .notesGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .noteCard {
+    padding: 10px 12px;
+  }
+}

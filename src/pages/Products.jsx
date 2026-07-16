@@ -3,6 +3,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import ProductsHero from "../components/ProductsHero/ProductsHero";
 import SearchFilter from "../components/SearchFilter/SearchFilter";
@@ -21,6 +22,8 @@ function Products() {
   const [products, setProducts] =
     useState([]);
 
+  const [searchParams] = useSearchParams();
+
   const [loading, setLoading] =
     useState(true);
 
@@ -32,6 +35,17 @@ function Products() {
 
   const [sort, setSort] =
     useState("Sort By");
+
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    const q = searchParams.get("search");
+    if (cat) {
+      setCategory(cat);
+    }
+    if (q) {
+      setSearch(q);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     let active = true;
