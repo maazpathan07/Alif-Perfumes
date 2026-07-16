@@ -97,7 +97,7 @@ function Topbar({ setSidebarOpen }) {
               <button
                 onClick={() => {
                   setDropdownOpen(false);
-                  navigate("/dashboard/settings");
+                  navigate("/dashboard/settings?tab=security");
                 }}
                 className={styles.dropdownItem}
               >

@@ -54,7 +54,7 @@
 .form textarea:focus {
   border-color: var(--primary);
 
-  box-shadow: 0 0 0 4px rgba(15,76,58,.08);
+  box-shadow: 0 0 0 4px rgba(26, 122, 88, 0.1);
 }
 
 /* ==========================

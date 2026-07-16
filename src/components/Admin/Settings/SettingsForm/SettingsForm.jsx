@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
@@ -21,7 +22,16 @@ import toast from "react-hot-toast";
 
 function SettingsForm() {
   const { settings, setSettings } = useSettings();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("general");
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(() => settings ?? defaultSettings);
 
