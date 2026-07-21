@@ -116,172 +116,9 @@
 }
 
 /* =========================
-   DESKTOP BUTTON
-======================== */
-
-.desktopButton {
-  display: flex;
-}
-
-.desktopButton button {
-  transition: all var(--transition-fast);
-}
-
-.desktopButton button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
-}
-
-/* =========================
-   MENU BUTTON
+   Header Search Form (Desktop Only)
 ========================= */
 
-.menuButton {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: rgba(26, 122, 88, 0.05);
-  border: 1px solid rgba(26, 122, 88, 0.1);
-  border-radius: 12px;
-  color: var(--primary);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.menuButton svg {
-  width: 24px;
-  height: 24px;
-  stroke-width: 2.2;
-}
-
-.menuButton:hover {
-  background: rgba(26, 122, 88, 0.1);
-  transform: scale(1.05);
-}
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-.mobileMenu {
-  position: fixed;
-  top: 88px;
-  right: -100%;
-  width: 300px;
-  height: calc(100vh - 88px);
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: #ffffff;
-  border-left: 1px solid rgba(26, 122, 88, 0.12);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
-  z-index: 1001;
-  opacity: 0;
-  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-}
-
-.show {
-  right: 0;
-  opacity: 1;
-}
-
-.mobileMenu a {
-  text-decoration: none;
-  color: var(--text);
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.25s ease;
-  padding: 10px 14px;
-  border-radius: 10px;
-}
-
-.mobileMenu a:hover {
-  color: var(--primary);
-  background: rgba(26, 122, 88, 0.05);
-  transform: translateX(4px);
-}
-
-.mobileMenu :global(.active) {
-  color: var(--primary);
-  background: rgba(26, 122, 88, 0.08);
-}
-
-.mobileMenu button {
-  margin-top: 15px;
-}
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 992px) {
-  .navLinks {
-    display: none;
-  }
-
-  .desktopButton {
-    display: none;
-  }
-
-  .searchForm {
-    display: none;
-  }
-
-  .menuButton {
-    display: flex;
-  }
-
-  .logo img {
-    width: 48px;
-    height: 48px;
-  }
-
-  .logo span {
-    font-size: 20px;
-  }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 576px) {
-  .navbar :global(.container) {
-    height: 70px;
-  }
-
-  .mobileMenu {
-    top: 70px;
-    width: 100%;
-    height: calc(100vh - 70px);
-    border-left: none;
-  }
-
-  .logo img {
-    width: 42px;
-    height: 42px;
-  }
-
-  .logo span {
-    font-size: 18px;
-  }
-
-  .logo {
-    gap: 8px;
-  }
-}
-
-.desktopButton button svg,
-.mobileMenu button svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-/* Header Search Form */
 .searchForm {
   display: flex;
   align-items: center;
@@ -334,7 +171,111 @@
   color: var(--primary-light);
 }
 
-/* Mobile Search */
+/* =========================
+   DESKTOP BUTTON
+======================== */
+
+.desktopButton {
+  display: flex;
+}
+
+.desktopButton button {
+  transition: all var(--transition-fast);
+}
+
+.desktopButton button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
+}
+
+.desktopButton button svg,
+.mobileMenu button svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* =========================
+   MENU BUTTON
+========================= */
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(26, 122, 88, 0.05);
+  border: 1px solid rgba(26, 122, 88, 0.1);
+  border-radius: 12px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menuButton svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.2;
+}
+
+.menuButton:hover {
+  background: rgba(26, 122, 88, 0.1);
+  transform: scale(1.05);
+}
+
+/* =========================
+   MOBILE MENU & MOBILE SEARCH
+========================= */
+
+.mobileMenu {
+  position: fixed;
+  top: 88px;
+  right: -100%;
+  width: 300px;
+  height: calc(100vh - 88px);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #ffffff;
+  border-left: 1px solid rgba(26, 122, 88, 0.12);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
+  z-index: 1001;
+  opacity: 0;
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+.show {
+  right: 0;
+  opacity: 1;
+}
+
+.mobileMenu a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.mobileMenu a:hover {
+  color: var(--primary);
+  background: rgba(26, 122, 88, 0.05);
+  transform: translateX(4px);
+}
+
+.mobileMenu :global(.active) {
+  color: var(--primary);
+  background: rgba(26, 122, 88, 0.08);
+}
+
+.mobileMenu button {
+  margin-top: 15px;
+}
+
 .mobileSearchForm {
   display: flex;
   align-items: center;
@@ -367,4 +308,61 @@
   color: var(--primary);
   background: transparent;
   cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE MEDIA QUERIES (ALWAYS AT BOTTOM FOR OVERRIDES)
+========================= */
+
+@media (max-width: 992px) {
+  .navLinks {
+    display: none !important;
+  }
+
+  .desktopButton {
+    display: none !important;
+  }
+
+  .searchForm {
+    display: none !important;
+  }
+
+  .menuButton {
+    display: flex !important;
+  }
+
+  .logo img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo span {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar :global(.container) {
+    height: 70px;
+  }
+
+  .mobileMenu {
+    top: 70px;
+    width: 100%;
+    height: calc(100vh - 70px);
+    border-left: none;
+  }
+
+  .logo img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logo span {
+    font-size: 18px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
 }
