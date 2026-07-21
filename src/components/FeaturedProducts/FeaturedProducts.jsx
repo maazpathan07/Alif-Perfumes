@@ -12,7 +12,10 @@ import Title from "../UI/Title";
 
 import styles from "./FeaturedProducts.module.css";
 
+import useSettings from "../../hooks/useSettings";
+
 function FeaturedProducts() {
+  const { settings } = useSettings();
   const [products, setProducts] =
     useState([]);
 
@@ -65,8 +68,8 @@ function FeaturedProducts() {
     <Section>
 
       <Title
-        title="Featured Products"
-        subtitle="Discover our best selling luxury fragrances."
+        title={settings?.featuredTitle || "Featured Products"}
+        subtitle={settings?.featuredSubtitle || "Discover our best selling luxury fragrances."}
       />
 
       <div className={styles.grid}>

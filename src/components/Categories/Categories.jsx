@@ -9,7 +9,10 @@ import staticCategories from "../../data/categories";
 
 import styles from "./Categories.module.css";
 
+import useSettings from "../../hooks/useSettings";
+
 function Categories() {
+  const { settings } = useSettings();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -50,8 +53,8 @@ function Categories() {
     <Section>
 
       <Title
-        title="Shop by Category"
-        subtitle="Explore our premium fragrance collections."
+        title={settings?.categoriesTitle || "Shop by Category"}
+        subtitle={settings?.categoriesSubtitle || "Explore our premium fragrance collections."}
       />
 
       <div className={styles.grid}>

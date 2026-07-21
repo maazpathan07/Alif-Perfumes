@@ -82,6 +82,20 @@ JazakAllahu Khair 🤍`,
   wcuCard3Title: "Authentic Arabic",
   wcuCard3Desc: "Experience traditional scents blended with modern aromatic chemistry.",
 
+  /* Dynamic Section Titles & Subtitles */
+  categoriesTitle: "Shop by Category",
+  categoriesSubtitle: "Explore our premium fragrance collections.",
+  featuredTitle: "Featured Products",
+  featuredSubtitle: "Discover our best selling luxury fragrances.",
+  testimonialsTitle: "What Our Customers Say",
+  testimonialsSubtitle: "Real reviews from our valued customers.",
+  ctaTag: "Premium Customer Support",
+  ctaTitle: "Need Help Choosing Your Perfect Fragrance?",
+  ctaDesc: "Our fragrance experts are ready to help you choose the perfect Arabic perfume. Chat with us directly on WhatsApp for quick assistance.",
+  productsHeroTag: "✨ Premium Arabic Collection",
+  productsHeroTitle: "Explore Our Fragrances",
+  productsHeroDesc: "Discover premium Arabic perfumes, attars, and luxury scents crafted with quality, elegance and trust.",
+
   /* Dynamic About Page Content */
   aboutStoryTitle: "Our Story",
   aboutStoryText: "Alif Perfumes was founded with a passion to bring pure, premium Arabic fragrances to perfume lovers. We believe that a fragrance is not just a scent, but an identity. Our journey started in Surat, India, with a vision to craft luxury scents that leave a lasting impression while remaining accessible.",

@@ -519,6 +519,102 @@ function SettingsForm() {
               </div>
             </div>
 
+            <div className={styles.card}>
+              <h3>Homepage Section Titles & Subtitles</h3>
+              <div className={styles.grid}>
+                <div>
+                  <label>Categories Section Title</label>
+                  <input
+                    type="text"
+                    name="categoriesTitle"
+                    value={formData.categoriesTitle || ""}
+                    onChange={handleChange}
+                    placeholder="Shop by Category"
+                  />
+                  <label style={{ marginTop: 12 }}>Categories Subtitle</label>
+                  <input
+                    type="text"
+                    name="categoriesSubtitle"
+                    value={formData.categoriesSubtitle || ""}
+                    onChange={handleChange}
+                    placeholder="Explore our premium fragrance collections."
+                  />
+                </div>
+                <div>
+                  <label>Featured Products Title</label>
+                  <input
+                    type="text"
+                    name="featuredTitle"
+                    value={formData.featuredTitle || ""}
+                    onChange={handleChange}
+                    placeholder="Featured Products"
+                  />
+                  <label style={{ marginTop: 12 }}>Featured Products Subtitle</label>
+                  <input
+                    type="text"
+                    name="featuredSubtitle"
+                    value={formData.featuredSubtitle || ""}
+                    onChange={handleChange}
+                    placeholder="Discover our best selling luxury fragrances."
+                  />
+                </div>
+                <div>
+                  <label>Testimonials Section Title</label>
+                  <input
+                    type="text"
+                    name="testimonialsTitle"
+                    value={formData.testimonialsTitle || ""}
+                    onChange={handleChange}
+                    placeholder="What Our Customers Say"
+                  />
+                  <label style={{ marginTop: 12 }}>Testimonials Subtitle</label>
+                  <input
+                    type="text"
+                    name="testimonialsSubtitle"
+                    value={formData.testimonialsSubtitle || ""}
+                    onChange={handleChange}
+                    placeholder="Real reviews from our valued customers."
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.card}>
+              <h3>WhatsApp Support CTA Banner</h3>
+              <div className={styles.grid}>
+                <div>
+                  <label>Banner Badge Tag</label>
+                  <input
+                    type="text"
+                    name="ctaTag"
+                    value={formData.ctaTag || ""}
+                    onChange={handleChange}
+                    placeholder="Premium Customer Support"
+                  />
+                </div>
+                <div>
+                  <label>Banner Headline</label>
+                  <input
+                    type="text"
+                    name="ctaTitle"
+                    value={formData.ctaTitle || ""}
+                    onChange={handleChange}
+                    placeholder="Need Help Choosing Your Perfect Fragrance?"
+                  />
+                </div>
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <label>Banner Description</label>
+                <textarea
+                  rows="2"
+                  name="ctaDesc"
+                  value={formData.ctaDesc || ""}
+                  onChange={handleChange}
+                  placeholder="Our fragrance experts are ready to help..."
+                />
+              </div>
+            </div>
+
             <div className={styles.actions}>
               <button type="submit" className={styles.button} disabled={loading}>
                 {loading ? "Saving Layout..." : "Save Settings"}
@@ -574,6 +670,42 @@ function SettingsForm() {
                     onChange={handleChange}
                   />
                 </div>
+              </div>
+            </div>
+
+            <div className={styles.card}>
+              <h3>Products Catalog Page Hero</h3>
+              <div className={styles.grid}>
+                <div>
+                  <label>Products Page Badge Tag</label>
+                  <input
+                    type="text"
+                    name="productsHeroTag"
+                    value={formData.productsHeroTag || ""}
+                    onChange={handleChange}
+                    placeholder="✨ Premium Arabic Collection"
+                  />
+                </div>
+                <div>
+                  <label>Products Page Headline Title</label>
+                  <input
+                    type="text"
+                    name="productsHeroTitle"
+                    value={formData.productsHeroTitle || ""}
+                    onChange={handleChange}
+                    placeholder="Explore Our Fragrances"
+                  />
+                </div>
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <label>Products Page Subtitle Description</label>
+                <textarea
+                  rows="2"
+                  name="productsHeroDesc"
+                  value={formData.productsHeroDesc || ""}
+                  onChange={handleChange}
+                  placeholder="Discover premium Arabic perfumes..."
+                />
               </div>
             </div>
 

@@ -35,15 +35,15 @@ JazakAllahu Khair 🤍`;
       <div className={styles.banner}>
 
         <span className={styles.tag}>
-          Premium Customer Support
+          {settings?.ctaTag || "Premium Customer Support"}
         </span>
 
         <h2>
-          Need Help Choosing Your Perfect Fragrance?
+          {settings?.ctaTitle || "Need Help Choosing Your Perfect Fragrance?"}
         </h2>
 
         <p>
-          Our fragrance experts are ready to help you choose the perfect Arabic perfume. Chat with us directly on WhatsApp for quick assistance.
+          {settings?.ctaDesc || "Our fragrance experts are ready to help you choose the perfect Arabic perfume. Chat with us directly on WhatsApp for quick assistance."}
         </p>
 
         <Button onClick={handleWhatsApp}>

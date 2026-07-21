@@ -11,7 +11,10 @@ import { Reveal } from "../../animations";
 
 import styles from "./Testimonials.module.css";
 
+import useSettings from "../../hooks/useSettings";
+
 function Testimonials() {
+  const { settings } = useSettings();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,8 +50,8 @@ function Testimonials() {
     <Section>
 
       <Title
-        title="What Our Customers Say"
-        subtitle="Real reviews from our valued customers."
+        title={settings?.testimonialsTitle || "What Our Customers Say"}
+        subtitle={settings?.testimonialsSubtitle || "Real reviews from our valued customers."}
       />
 
       <div className={styles.grid}>
