@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   MessageCircle,
   PhoneCall,
@@ -16,11 +17,28 @@ import { Link } from "react-router-dom";
 
 import { Reveal } from "../../animations";
 import useSettings from "../../hooks/useSettings";
+import { getCategories } from "../../services/categoryService";
 
 import styles from "./Footer.module.css";
 
 function Footer() {
   const { settings } = useSettings();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    getCategories()
+      .then((data) => {
+        if (active) {
+          const activeCats = data.filter((c) => c.isActive !== false);
+          setCategories(activeCats);
+        }
+      })
+      .catch((err) => console.error("Failed to load footer categories:", err));
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const currentYear = new Date().getFullYear();
 
@@ -76,17 +94,23 @@ function Footer() {
 
               <h3>Categories</h3>
 
-              <p>Arabic Perfumes</p>
-
-              <p>Attars</p>
-
-              <p>Tasbeeh</p>
-
-              <p>Islamic Caps</p>
-
-              <p>Bakhoor</p>
-
-              <p>Gift Sets</p>
+              {categories.length > 0 ? (
+                categories.slice(0, 6).map((cat) => (
+                  <Link
+                    key={cat.id}
+                    to={`/products?category=${encodeURIComponent(cat.name)}`}
+                  >
+                    {cat.name}
+                  </Link>
+                ))
+              ) : (
+                <>
+                  <Link to="/products?category=Arabic%20Perfumes">Arabic Perfumes</Link>
+                  <Link to="/products?category=Attars">Attars</Link>
+                  <Link to="/products?category=Bakhoor">Bakhoor</Link>
+                  <Link to="/products?category=Gift%20Sets">Gift Sets</Link>
+                </>
+              )}
 
             </div>
 
