@@ -13,7 +13,7 @@ import {
   FaGlobe,
 } from "react-icons/fa6";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Reveal } from "../../animations";
 import useSettings from "../../hooks/useSettings";
@@ -22,6 +22,7 @@ import { getCategories } from "../../services/categoryService";
 import styles from "./Footer.module.css";
 
 function Footer() {
+  const navigate = useNavigate();
   const { settings } = useSettings();
   const [categories, setCategories] = useState([]);
 
@@ -231,7 +232,7 @@ function Footer() {
           <p
             onClick={(e) => {
               if (e.detail === 2) {
-                window.location.href = "/login";
+                navigate("/login");
               }
             }}
             title="ALIF PERFUMES"
