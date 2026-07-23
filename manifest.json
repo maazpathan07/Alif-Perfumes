@@ -1,0 +1,17 @@
+{
+  "name": "ALIF PERFUMES",
+  "short_name": "ALIF PERFUMES",
+  "description": "Premium Arabic Fragrances, Attars & Bakhoor",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfbfa",
+  "theme_color": "#1a7a58",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

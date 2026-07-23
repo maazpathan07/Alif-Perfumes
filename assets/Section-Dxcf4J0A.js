@@ -1,0 +1,1 @@
+import{t as e}from"./vendor-react-BbcWTyzm.js";var t={container:`_container_rcypu_1`},n=e();function r({children:e}){return(0,n.jsx)(`div`,{className:t.container,children:e})}var i={section:`_section_19m5a_1`};function a({children:e,id:t,className:a=``}){return(0,n.jsx)(`section`,{id:t,className:`${i.section} ${a}`.trim(),children:(0,n.jsx)(r,{children:e})})}export{a as t};
