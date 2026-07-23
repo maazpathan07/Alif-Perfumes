@@ -19,11 +19,12 @@ function CategoryCard({ category }) {
           {category.image ? (
             <img
               src={category.image}
-              alt={category.name}
+              alt=""
+              aria-hidden="true"
               loading="lazy"
             />
           ) : (
-            <span>🧴</span>
+            <span aria-hidden="true">🧴</span>
           )}
 
         </div>
@@ -43,6 +44,7 @@ function CategoryCard({ category }) {
             <ArrowRight
               size={18}
               strokeWidth={2.2}
+              aria-hidden="true"
             />
 
           </span>

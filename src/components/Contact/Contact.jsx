@@ -116,6 +116,7 @@ JazakAllahu Khair 🤍`;
 
                   <MessageCircle
                     size={26}
+                    aria-hidden="true"
                   />
 
                   <h3>
@@ -145,6 +146,7 @@ JazakAllahu Khair 🤍`;
 
                   <PhoneCall
                     size={26}
+                    aria-hidden="true"
                   />
 
                   <h3>
@@ -172,6 +174,7 @@ JazakAllahu Khair 🤍`;
 
                   <Mail
                     size={26}
+                    aria-hidden="true"
                   />
 
                   <h3>Email</h3>
@@ -198,7 +201,9 @@ JazakAllahu Khair 🤍`;
                 Send Message
               </h2>
 
+              <label htmlFor="contact-name" className="visually-hidden">Your Name</label>
               <input
+                id="contact-name"
                 type="text"
                 placeholder="Your Name"
                 value={name}
@@ -209,7 +214,9 @@ JazakAllahu Khair 🤍`;
                 }
               />
 
+              <label htmlFor="contact-phone" className="visually-hidden">Phone Number</label>
               <input
+                id="contact-phone"
                 type="tel"
                 placeholder="Phone Number"
                 value={phone}
@@ -220,7 +227,9 @@ JazakAllahu Khair 🤍`;
                 }
               />
 
+              <label htmlFor="contact-message" className="visually-hidden">Your Message</label>
               <textarea
+                id="contact-message"
                 rows="5"
                 placeholder="Your Message"
                 value={message}
@@ -238,6 +247,7 @@ JazakAllahu Khair 🤍`;
               >
                 <MessageCircle
                   size={18}
+                  aria-hidden="true"
                 />
 
                 &nbsp;
@@ -260,6 +270,7 @@ JazakAllahu Khair 🤍`;
 
                   <MapPin
                     size={22}
+                    aria-hidden="true"
                   />
 
                   <div>
@@ -286,6 +297,7 @@ JazakAllahu Khair 🤍`;
 
                   <Clock3
                     size={22}
+                    aria-hidden="true"
                   />
 
                   <div>
@@ -312,6 +324,7 @@ JazakAllahu Khair 🤍`;
 
                   <Globe
                     size={22}
+                    aria-hidden="true"
                   />
 
                   <div>

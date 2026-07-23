@@ -11,6 +11,7 @@ import ProductGrid from "../components/ProductGrid/ProductGrid";
 import Section from "../components/UI/Section";
 import Button from "../components/Button/Button";
 import EmptyState from "../components/UI/EmptyState/EmptyState";
+import SEO from "../components/SEO/SEO";
 
 import { getProducts } from "../services/productService";
 
@@ -145,8 +146,39 @@ function Products() {
     category !== "All Categories" ||
     sort !== "Sort By";
 
+  const seoTitle = category !== "All Categories"
+    ? `${category} Collection`
+    : search
+    ? `Search results for "${search}"`
+    : "Explore Perfumes & Attars";
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://alif-perfumes-b88e8.web.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Products",
+        "item": "https://alif-perfumes-b88e8.web.app/products"
+      }
+    ]
+  };
+
   return (
     <>
+      <SEO
+        title={seoTitle}
+        description="Browse our collection of luxury Arabic perfumes, long-lasting attars, aromatic bakhoor, and premium fragrance gift sets."
+        canonical="/products"
+        jsonLd={breadcrumbJsonLd}
+      />
       <ProductsHero />
 
       <Section>

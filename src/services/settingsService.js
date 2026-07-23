@@ -103,6 +103,8 @@ JazakAllahu Khair 🤍`,
   aboutMission: "Delivering pure authentic fragrances while maintaining maximum quality, trust, and customer satisfaction."
 };
 
+let cachedSettings = { ...defaultSettings };
+
 /* ======================================
    Get Settings
 ====================================== */
@@ -110,22 +112,30 @@ export async function getSettings() {
   try {
     const snapshot = await getDoc(settingsRef);
     if (!snapshot.exists()) {
+      cachedSettings = { ...defaultSettings };
       return defaultSettings;
     }
-    return {
+    const data = {
       ...defaultSettings,
       ...snapshot.data(),
     };
+    cachedSettings = data;
+    return data;
   } catch (error) {
     console.error("Error reading settings service:", error);
-    return defaultSettings;
+    return cachedSettings;
   }
+}
+
+export function getCachedSettings() {
+  return cachedSettings;
 }
 
 /* ======================================
    Save Settings
 ====================================== */
 export async function saveSettings(data) {
+  cachedSettings = { ...cachedSettings, ...data };
   await setDoc(settingsRef, data, { merge: true });
 }
 

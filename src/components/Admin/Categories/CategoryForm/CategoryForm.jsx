@@ -190,7 +190,9 @@ function CategoryForm({
       onSubmit={handleSubmit}
     >
 
+      <label htmlFor="cat-name" className="visually-hidden">Category Name</label>
       <input
+        id="cat-name"
         type="text"
         name="name"
         placeholder="Category Name"
@@ -199,7 +201,9 @@ function CategoryForm({
         required
       />
 
+      <label htmlFor="cat-description" className="visually-hidden">Description</label>
       <textarea
+        id="cat-description"
         rows="4"
         name="description"
         placeholder="Description"
@@ -207,7 +211,9 @@ function CategoryForm({
         onChange={handleChange}
       />
 
+      <label htmlFor="cat-image-url" className="visually-hidden">Image URL (Fallback)</label>
       <input
+        id="cat-image-url"
         type="text"
         name="image"
         placeholder="Image URL (Fallback)"
@@ -216,19 +222,20 @@ function CategoryForm({
       />
 
       <div className={styles.fileInputGroup}>
-        <label>Or Upload Category Image File:</label>
+        <label htmlFor="cat-image-file">Or Upload Category Image File:</label>
         <input
+          id="cat-image-file"
           type="file"
           accept="image/*"
           onChange={(e) => setImageFile(e.target.files[0])}
         />
       </div>
 
-      {(imageFile || formData.image) && (
+      {(imageFile || (formData.image && formData.image.trim() !== "")) && (
         <div className={styles.previewContainer}>
           <img
             src={imageFile ? URL.createObjectURL(imageFile) : formData.image}
-            alt="Preview"
+            alt="Category image preview"
             className={styles.preview}
           />
           {imageFile && (
@@ -236,6 +243,7 @@ function CategoryForm({
               type="button"
               onClick={() => setImageFile(null)}
               className={styles.removePreview}
+              aria-label="Remove image file"
             >
               Remove
             </button>
@@ -244,7 +252,14 @@ function CategoryForm({
       )}
 
       {loading && status === "Uploading" && (
-        <div className={styles.progressContainer}>
+        <div
+          className={styles.progressContainer}
+          role="progressbar"
+          aria-valuenow={uploadProgress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Image upload progress"
+        >
           <div className={styles.progressTop}>
             <span>Uploading Image...</span>
             <span>{uploadProgress}%</span>

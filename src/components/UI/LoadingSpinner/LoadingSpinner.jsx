@@ -4,8 +4,12 @@ function LoadingSpinner({
   text = "Loading...",
 }) {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.spinner}></div>
+    <div
+      className={styles.wrapper}
+      role="status"
+      aria-live="polite"
+    >
+      <div className={styles.spinner} aria-hidden="true"></div>
       <p>{text}</p>
     </div>
   );

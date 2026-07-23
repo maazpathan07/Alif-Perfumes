@@ -118,6 +118,8 @@ function Login() {
         navigate("/dashboard", { replace: true });
       }, 2500);
     } catch (err) {
+      console.error("Authentication Error [Internal Log]:", err.code, err.message);
+
       const newAttempts = getAttempts() + 1;
       setAttempts(newAttempts);
       setAttemptState(newAttempts);
@@ -127,18 +129,19 @@ function Login() {
         setError(`Too many failed attempts. Locked for 5 minutes.`);
         toast.error("Account temporarily locked.");
       } else {
-        const remaining = MAX_ATTEMPTS - newAttempts;
         let msg = "";
         switch (err.code) {
           case "auth/invalid-credential":
           case "auth/wrong-password":
-            msg = "Invalid email or password."; break;
           case "auth/user-not-found":
-            msg = "Admin account not found."; break;
+          case "auth/invalid-email":
+            msg = "Invalid email or password.";
+            break;
           case "auth/too-many-requests":
-            msg = "Too many attempts. Try again later."; break;
+            msg = "Too many attempts. Try again later.";
+            break;
           default:
-            msg = "Login failed. Please try again.";
+            msg = "Invalid email or password.";
         }
         setError(msg);
         toast.error(msg);

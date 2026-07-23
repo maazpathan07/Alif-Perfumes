@@ -4,7 +4,7 @@ import {
 } from "react";
 
 import { getProducts } from "../../../../services/productService";
-
+import ScrollableTable from "../../../UI/ScrollableTable/ScrollableTable";
 import styles from "./RecentProducts.module.css";
 
 function RecentProducts() {
@@ -36,7 +36,7 @@ function RecentProducts() {
       {products.length === 0 ? (
         <p>No Products Found</p>
       ) : (
-        <div className={styles.tableResponsive}>
+        <ScrollableTable>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -55,7 +55,7 @@ function RecentProducts() {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollableTable>
       )}
 
     </div>

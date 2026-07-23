@@ -1,0 +1,84 @@
+.outer {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Scrollable inner wrapper ── */
+.wrapper {
+  width: 100%;
+  background: white;
+  border: 1px solid rgba(26, 122, 88, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(26, 122, 88, 0.05);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 122, 88, 0.3) transparent;
+}
+
+.wrapper::-webkit-scrollbar {
+  height: 5px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background: rgba(26, 122, 88, 0.35);
+  border-radius: 99px;
+}
+
+/* ── Arrow buttons ── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(26, 122, 88, 0.2);
+  background: #ffffff;
+  color: var(--primary, #1a7a58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+
+  /* hidden by default */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.arrow:hover {
+  background: var(--primary, #1a7a58);
+  color: #ffffff;
+  border-color: var(--primary, #1a7a58);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.arrowVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.arrowLeft {
+  left: -18px;
+}
+
+.arrowRight {
+  right: -18px;
+}
+
+/* On mobile: keep arrows inside, smaller */
+@media (max-width: 768px) {
+  .arrowLeft  { left: 4px; }
+  .arrowRight { right: 4px; }
+
+  .arrow {
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(4px);
+  }
+}

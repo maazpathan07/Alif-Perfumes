@@ -11,9 +11,9 @@ function TestimonialCard({ review }) {
   return (
     <Hover>
 
-      <div className={styles.card}>
+      <article className={styles.card}>
 
-        <div className={styles.stars}>
+        <div className={styles.stars} aria-label={`Rating: ${review.rating} out of 5`} role="img">
 
           {Array.from({
             length: review.rating,
@@ -23,13 +23,14 @@ function TestimonialCard({ review }) {
               size={18}
               strokeWidth={2}
               fill="currentColor"
+              aria-hidden="true"
             />
           ))}
 
         </div>
 
         <p className={styles.review}>
-          "{review.review}"
+          &ldquo;{review.review}&rdquo;
         </p>
 
         <div className={styles.user}>
@@ -37,13 +38,14 @@ function TestimonialCard({ review }) {
           {review.image ? (
             <img
               src={review.image}
-              alt={review.name}
+              alt={`Photo of ${review.name}`}
               loading="lazy"
             />
           ) : (
             <UserCircle2
               size={46}
               strokeWidth={1.8}
+              aria-hidden="true"
             />
           )}
 
@@ -59,7 +61,7 @@ function TestimonialCard({ review }) {
 
         </div>
 
-      </div>
+      </article>
 
     </Hover>
   );

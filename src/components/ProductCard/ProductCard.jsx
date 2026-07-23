@@ -15,15 +15,19 @@ import { Hover } from "../../animations";
 function ProductCard({ product }) {
   return (
     <Hover>
-      <div className={styles.card}>
+      <article className={styles.card}>
 
         <div className={styles.imageWrapper}>
-          <img
-            src={product.image}
-            alt={product.name}
-            className={styles.image}
-            loading="lazy"
-          />
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.name}
+              className={styles.image}
+              loading="lazy"
+            />
+          ) : (
+            <div className={styles.image} role="img" aria-label={product.name} />
+          )}
         </div>
 
         <div className={styles.content}>
@@ -34,11 +38,12 @@ function ProductCard({ product }) {
 
           <h3>{product.name}</h3>
 
-          <div className={styles.rating}>
+          <div className={styles.rating} aria-label={`Rating: ${product.rating} out of 5`}>
             <Star
               size={16}
               strokeWidth={2}
               fill="currentColor"
+              aria-hidden="true"
             />
             <span>{product.rating}</span>
           </div>
@@ -47,7 +52,10 @@ function ProductCard({ product }) {
             {product.discountPrice ? (
               <>
                 <span className={styles.discountPrice}>₹{product.discountPrice}</span>
-                <span className={styles.originalPrice}>₹{product.price}</span>
+                <span className={styles.originalPrice}>
+                  <span className="visually-hidden">Original price: </span>
+                  ₹{product.price}
+                </span>
               </>
             ) : (
               <span className={styles.price}>₹{product.price}</span>
@@ -63,6 +71,7 @@ function ProductCard({ product }) {
               <Eye
                 size={18}
                 strokeWidth={2.2}
+                aria-hidden="true"
               />
               View
             </Button>
@@ -76,6 +85,7 @@ function ProductCard({ product }) {
               <MessageCircle
                 size={18}
                 strokeWidth={2.2}
+                aria-hidden="true"
               />
               Buy
             </Button>
@@ -84,7 +94,7 @@ function ProductCard({ product }) {
 
         </div>
 
-      </div>
+      </article>
     </Hover>
   );
 }

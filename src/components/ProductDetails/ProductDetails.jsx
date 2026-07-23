@@ -11,6 +11,7 @@ import Section from "../UI/Section";
 import Button from "../Button/Button";
 import RelatedProducts from "../RelatedProducts/RelatedProducts";
 import LoadingSpinner from "../UI/LoadingSpinner/LoadingSpinner";
+import SEO from "../SEO/SEO";
 
 import {
   Reveal,
@@ -69,16 +70,17 @@ function ProductDetails() {
   if (!product) {
     return (
       <Section>
+        <SEO title="Product Not Found" robots="noindex, nofollow" />
         <Reveal>
 
           <div className={styles.notFound}>
 
-            <h2>
+            <h1>
               Product Not Found
-            </h2>
+            </h1>
 
             <p>
-              The product you're looking for does not exist.
+              The product you&apos;re looking for does not exist.
             </p>
 
           </div>
@@ -88,11 +90,68 @@ function ProductDetails() {
     );
   }
 
+  const productJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.description,
+      "image": product.image ? [product.image] : [],
+      "category": product.category,
+      "offers": {
+        "@type": "Offer",
+        "price": product.discountPrice || product.price,
+        "priceCurrency": "INR",
+        "availability": product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        "url": `https://alif-perfumes-b88e8.web.app/product/${product.id}`
+      },
+      ...(product.rating ? {
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": product.rating,
+          "reviewCount": product.totalReviews || 1
+        }
+      } : {})
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://alif-perfumes-b88e8.web.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Products",
+          "item": "https://alif-perfumes-b88e8.web.app/products"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": product.name,
+          "item": `https://alif-perfumes-b88e8.web.app/product/${product.id}`
+        }
+      ]
+    }
+  ];
+
   return (
     <>
+      <SEO
+        title={product.name}
+        description={product.description || `Buy ${product.name} luxury Arabic perfume at ALIF PERFUMES.`}
+        canonical={`/product/${product.id}`}
+        ogType="product"
+        ogImage={product.image}
+        jsonLd={productJsonLd}
+      />
       <Section>
 
-        <section className={styles.details}>
+        <div className={styles.details}>
 
           <Reveal direction="left">
 
@@ -100,14 +159,15 @@ function ProductDetails() {
 
               <div className={styles.imageBox}>
 
-                <img
-                  src={
-                    product.image ||
-                    "/placeholder-product.png"
-                  }
-                  alt={product.name}
-                  loading="lazy"
-                />
+                {(product.image && product.image.trim() !== "") ? (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div role="img" aria-label={product.name} />
+                )}
 
               </div>
 
@@ -125,11 +185,12 @@ function ProductDetails() {
 
               <h1>{product.name}</h1>
 
-              <div className={styles.rating}>
+              <div className={styles.rating} aria-label={`Rating: ${product.rating} out of 5, ${product.totalReviews || 0} reviews`}>
 
                 <Star
                   size={18}
                   fill="currentColor"
+                  aria-hidden="true"
                 />
 
                 <span>
@@ -148,18 +209,20 @@ function ProductDetails() {
 
                 {product.discountPrice ? (
                   <>
-                    <h2>
+                    <p className={styles.currentPrice}>
+                      <span className="visually-hidden">Current price: </span>
                       ₹{product.discountPrice}
-                    </h2>
+                    </p>
 
                     <span className={styles.oldPrice}>
+                      <span className="visually-hidden">Original price: </span>
                       ₹{product.price}
                     </span>
                   </>
                 ) : (
-                  <h2>
+                  <p className={styles.currentPrice}>
                     ₹{product.price}
-                  </h2>
+                  </p>
                 )}
 
               </div>
@@ -170,7 +233,7 @@ function ProductDetails() {
 
               {(product.topNotes || product.middleNotes || product.baseNotes) && (
                 <div className={styles.notesSection}>
-                  <h3>Fragrance Profile</h3>
+                  <h2>Fragrance Profile</h2>
                   <div className={styles.notesGrid}>
                     {product.topNotes && (
                       <div className={styles.noteCard}>
@@ -210,6 +273,7 @@ function ProductDetails() {
 
                     <CircleCheck
                       size={18}
+                      aria-hidden="true"
                     />
 
                     <span>
@@ -231,6 +295,7 @@ function ProductDetails() {
 
                 <MessageCircle
                   size={18}
+                  aria-hidden="true"
                 />
 
                 {product.inStock
@@ -243,7 +308,7 @@ function ProductDetails() {
 
           </Reveal>
 
-        </section>
+        </div>
 
       </Section>
 

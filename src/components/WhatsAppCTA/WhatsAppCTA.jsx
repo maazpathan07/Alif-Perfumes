@@ -50,6 +50,7 @@ JazakAllahu Khair 🤍`;
           <MessageCircle
             size={18}
             strokeWidth={2.2}
+            aria-hidden="true"
           />
           Chat on WhatsApp
         </Button>

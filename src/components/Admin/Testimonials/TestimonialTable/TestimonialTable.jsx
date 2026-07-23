@@ -18,6 +18,7 @@ import { deleteImage } from "../../../../services/storageService";
 import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import EmptyState from "../../../UI/EmptyState/EmptyState";
 import ConfirmModal from "../../../UI/ConfirmModal/ConfirmModal";
+import ScrollableTable from "../../../UI/ScrollableTable/ScrollableTable";
 
 import styles from "./TestimonialTable.module.css";
 
@@ -128,8 +129,7 @@ function TestimonialTable({ onEdit }) {
 
   return (
     <>
-      <div className={styles.wrapper}>
-
+      <ScrollableTable>
         <table className={styles.table}>
 
           <thead>
@@ -257,8 +257,7 @@ function TestimonialTable({ onEdit }) {
           </tbody>
 
         </table>
-
-      </div>
+      </ScrollableTable>
 
       <ConfirmModal
         open={showModal}

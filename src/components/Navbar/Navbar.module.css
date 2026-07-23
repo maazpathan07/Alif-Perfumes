@@ -1,3 +1,29 @@
+/* =========================
+   SKIP LINK
+========================= */
+
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+  outline: 2px solid transparent;
+}
+
+.skipLink:focus {
+  top: 0;
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -119,12 +145,16 @@
    Header Search Form (Desktop Only)
 ========================= */
 
+/* =========================
+   Header Search Form (Desktop Only)
+========================= */
+
 .searchForm {
   display: flex;
   align-items: center;
   background: rgba(26, 122, 88, 0.05);
-  border: 1px solid rgba(26, 122, 88, 0.1);
-  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(26, 122, 88, 0.15);
+  border-radius: var(--radius-full, 99px);
   padding: 2px 6px 2px 14px;
   height: 38px;
   width: 220px;
@@ -132,21 +162,33 @@
   transition: all 0.3s ease;
 }
 
+.searchForm:hover {
+  background: rgba(26, 122, 88, 0.08);
+  border-color: rgba(26, 122, 88, 0.3);
+}
+
 .searchForm:focus-within {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(200, 169, 106, 0.4);
-  box-shadow: 0 4px 12px rgba(26, 122, 88, 0.06);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 122, 88, 0.12);
 }
 
 .searchInput {
-  border: none;
-  background: transparent;
-  outline: none;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
   font-size: 13.5px;
   width: 100%;
   color: var(--text);
   font-family: inherit;
   font-weight: 500;
+}
+
+.searchInput:focus,
+.searchInput:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .searchInput::placeholder {
@@ -162,13 +204,20 @@
   border-radius: 50%;
   color: var(--primary);
   background: transparent;
+  border: none !important;
+  outline: none !important;
   cursor: pointer;
+  flex-shrink: 0;
   transition: all var(--transition-fast);
 }
 
 .searchBtn:hover {
   background: rgba(26, 122, 88, 0.1);
   color: var(--primary-light);
+}
+
+.searchBtn:focus-visible {
+  outline: none !important;
 }
 
 /* =========================
@@ -197,7 +246,7 @@
 
 /* =========================
    MENU BUTTON
-========================= */
+======================== */
 
 .menuButton {
   display: none;
@@ -226,7 +275,7 @@
 
 /* =========================
    MOBILE MENU & MOBILE SEARCH
-========================= */
+======================== */
 
 .mobileMenu {
   position: fixed;
@@ -272,7 +321,7 @@
   background: rgba(26, 122, 88, 0.08);
 }
 
-.mobileMenu button {
+.mobileMenu > button {
   margin-top: 15px;
 }
 
@@ -280,34 +329,82 @@
   display: flex;
   align-items: center;
   background: rgba(26, 122, 88, 0.04);
-  border: 1px solid rgba(26, 122, 88, 0.1);
+  border: 1.5px solid rgba(26, 122, 88, 0.15);
   border-radius: 12px;
-  padding: 2px 6px 2px 14px;
-  height: 44px;
+  padding: 4px 6px 4px 14px;
+  height: 46px;
   width: 100%;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.mobileSearchForm:hover {
+  background: rgba(26, 122, 88, 0.08);
+  border-color: rgba(26, 122, 88, 0.3);
+}
+
+.mobileSearchForm:focus-within {
+  background: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 122, 88, 0.12);
 }
 
 .mobileSearchInput {
-  border: none;
-  background: transparent;
-  outline: none;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
   font-size: 14px;
   width: 100%;
   color: var(--text);
   font-family: inherit;
+  font-weight: 500;
+}
+
+.mobileSearchInput:focus,
+.mobileSearchInput:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.mobileSearchInput::placeholder {
+  color: var(--text-muted);
 }
 
 .mobileSearchBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   border-radius: 8px;
   color: var(--primary);
-  background: transparent;
+  background: rgba(26, 122, 88, 0.08);
+  border: none !important;
+  outline: none !important;
   cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.mobileSearchBtn svg {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+}
+
+.mobileSearchBtn:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.mobileSearchBtn:focus-visible {
+  outline: none !important;
 }
 
 /* =========================

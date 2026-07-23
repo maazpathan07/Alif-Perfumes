@@ -148,7 +148,8 @@
   opacity: 1;
 }
 
-.stats h3 {
+.stats h3,
+.statNumber {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 28px;
   font-weight: 800;

@@ -202,6 +202,84 @@
   margin: 6px 0;
 }
 
+/* ── Session Card ── */
+.sessionCard {
+  padding: 10px 12px;
+  background: rgba(26, 122, 88, 0.04);
+  border-radius: 10px;
+  border: 1px solid rgba(26, 122, 88, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sessionTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sessionName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary, #1a7a58);
+}
+
+.sessionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.sessionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: pulse 1.5s ease-in-out infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+
+.sessionRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.sessionRow svg {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.sessionDuration {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.sessionDuration strong {
+  color: var(--primary, #1a7a58);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+}
+
 .dropdownItem {
   background: transparent;
   border: none;

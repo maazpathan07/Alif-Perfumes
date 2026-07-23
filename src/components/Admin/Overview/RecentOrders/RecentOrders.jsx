@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getOrders } from "../../../../services/orderService";
+import ScrollableTable from "../../../UI/ScrollableTable/ScrollableTable";
 import styles from "./RecentOrders.module.css";
 
 function RecentOrders() {
@@ -32,7 +33,7 @@ function RecentOrders() {
       {orders.length === 0 ? (
         <p className={styles.empty}>No Enquiries Logged Yet</p>
       ) : (
-        <div className={styles.tableResponsive}>
+        <ScrollableTable>
           <table className={styles.table}>
             <thead>
               <tr>
@@ -70,7 +71,7 @@ function RecentOrders() {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollableTable>
       )}
     </div>
   );

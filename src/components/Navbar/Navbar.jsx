@@ -66,6 +66,11 @@ function Navbar() {
 
   return (
     <header className={styles.navbar}>
+      {/* Skip to Content Link */}
+      <a href="#main-content" className={styles.skipLink}>
+        Skip to main content
+      </a>
+
       <div className="container">
 
         {/* Logo */}
@@ -84,10 +89,8 @@ function Navbar() {
                 settings?.logo ||
                 defaultLogo
               }
-              alt={
-                settings?.businessName ||
-                "Business Logo"
-              }
+              alt=""
+              aria-hidden="true"
             />
 
             <span>
@@ -99,7 +102,7 @@ function Navbar() {
 
         {/* Desktop Navigation */}
 
-        <nav className={styles.navLinks}>
+        <nav className={styles.navLinks} aria-label="Main navigation">
 
           <NavLink
             to="/"
@@ -132,8 +135,10 @@ function Navbar() {
         </nav>
 
         {/* Desktop Search */}
-        <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
+        <form onSubmit={handleSearchSubmit} className={styles.searchForm} role="search" aria-label="Site search">
+          <label htmlFor="desktop-search" className="visually-hidden">Search perfumes</label>
           <input
+            id="desktop-search"
             type="text"
             placeholder="Search perfumes..."
             value={searchVal}
@@ -141,7 +146,7 @@ function Navbar() {
             className={styles.searchInput}
           />
           <button type="submit" className={styles.searchBtn} aria-label="Search">
-            <Search size={16} />
+            <Search size={16} aria-hidden="true" />
           </button>
         </form>
 
@@ -158,6 +163,7 @@ function Navbar() {
             <MessageCircle
               size={18}
               strokeWidth={2.2}
+              aria-hidden="true"
             />
 
             &nbsp; WhatsApp
@@ -176,48 +182,60 @@ function Navbar() {
               (prev) => !prev
             )
           }
-          aria-label="Toggle Menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav-menu"
         >
           {menuOpen ? (
             <X
               size={28}
               strokeWidth={2.4}
+              aria-hidden="true"
             />
           ) : (
             <Menu
               size={28}
               strokeWidth={2.4}
+              aria-hidden="true"
             />
           )}
         </button>
 
         {/* Mobile Menu */}
 
-        <div
+        <nav
+          id="mobile-nav-menu"
           className={`${styles.mobileMenu} ${
             menuOpen
               ? styles.show
               : ""
           }`}
+          aria-label="Mobile navigation"
+          aria-hidden={!menuOpen}
+          inert={!menuOpen ? "" : undefined}
         >
 
           {/* Mobile Search */}
-          <form onSubmit={handleSearchSubmit} className={styles.mobileSearchForm}>
+          <form onSubmit={handleSearchSubmit} className={styles.mobileSearchForm} role="search" aria-label="Mobile site search">
+            <label htmlFor="mobile-search" className="visually-hidden">Search perfumes</label>
             <input
+              id="mobile-search"
               type="text"
               placeholder="Search perfumes..."
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
               className={styles.mobileSearchInput}
+              tabIndex={menuOpen ? 0 : -1}
             />
-            <button type="submit" className={styles.mobileSearchBtn} aria-label="Search">
-              <Search size={16} />
+            <button type="submit" className={styles.mobileSearchBtn} aria-label="Search" tabIndex={menuOpen ? 0 : -1}>
+              <Search size={16} aria-hidden="true" />
             </button>
           </form>
 
           <NavLink
             to="/"
             onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
           >
             Home
           </NavLink>
@@ -225,6 +243,7 @@ function Navbar() {
           <NavLink
             to="/products"
             onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
           >
             Products
           </NavLink>
@@ -232,6 +251,7 @@ function Navbar() {
           <NavLink
             to="/about"
             onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
           >
             About
           </NavLink>
@@ -239,6 +259,7 @@ function Navbar() {
           <NavLink
             to="/contact"
             onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
           >
             Contact
           </NavLink>
@@ -249,13 +270,14 @@ function Navbar() {
             <MessageCircle
               size={18}
               strokeWidth={2.2}
+              aria-hidden="true"
             />
 
             &nbsp; WhatsApp
 
           </Button>
 
-        </div>
+        </nav>
 
       </div>
     </header>

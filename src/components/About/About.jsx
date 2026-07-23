@@ -126,35 +126,35 @@ JazakAllahu Khair 🤍`);
             <div className={styles.cards}>
 
               <Hover>
-                <div>🌿 Arabic Perfumes</div>
+                <div><span aria-hidden="true">🌿 </span>Arabic Perfumes</div>
               </Hover>
 
               <Hover>
-                <div>🧴 Attars</div>
+                <div><span aria-hidden="true">🧴 </span>Attars</div>
               </Hover>
 
               <Hover>
-                <div>📿 Tasbeeh</div>
+                <div><span aria-hidden="true">📿 </span>Tasbeeh</div>
               </Hover>
 
               <Hover>
-                <div>🕌 Islamic Caps</div>
+                <div><span aria-hidden="true">🕌 </span>Islamic Caps</div>
               </Hover>
 
               <Hover>
-                <div>🌿 Miswak</div>
+                <div><span aria-hidden="true">🌿 </span>Miswak</div>
               </Hover>
 
               <Hover>
-                <div>🎁 Gift Sets</div>
+                <div><span aria-hidden="true">🎁 </span>Gift Sets</div>
               </Hover>
 
               <Hover>
-                <div>🧴 Bakhoor</div>
+                <div><span aria-hidden="true">🧴 </span>Bakhoor</div>
               </Hover>
 
               <Hover>
-                <div>📖 Islamic Books</div>
+                <div><span aria-hidden="true">📖 </span>Islamic Books</div>
               </Hover>
 
             </div>
@@ -195,6 +195,7 @@ JazakAllahu Khair 🤍`);
               <MessageCircle
                 size={18}
                 strokeWidth={2.2}
+                aria-hidden="true"
               />
 
               &nbsp;

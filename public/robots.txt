@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Sitemap: https://alif-perfumes-b88e8.web.app/sitemap.xml

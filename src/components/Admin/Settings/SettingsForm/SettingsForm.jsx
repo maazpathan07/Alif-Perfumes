@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
+  updateEmail,
+  verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import {
   Eye,
@@ -13,6 +15,9 @@ import {
   BookOpen,
   Search,
   Lock,
+  Mail,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { saveSettings, defaultSettings } from "../../../../services/settingsService";
 import { useSettings } from "../../../../context/SettingsContext";
@@ -25,6 +30,35 @@ function SettingsForm() {
   const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("general");
 
+  // Tab scroll arrows
+  const tabsRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const el = tabsRef.current;
+    if (el) el.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      if (el) el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, []);
+
+  const scrollTabs = (dir) => {
+    if (tabsRef.current) {
+      tabsRef.current.scrollBy({ left: dir * 160, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     const tabParam = searchParams.get("tab");
     if (tabParam) {
@@ -35,7 +69,7 @@ function SettingsForm() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(() => settings ?? defaultSettings);
 
-  // Security Form State
+  // Security Form State - Password
   const [secLoading, setSecLoading] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -43,6 +77,12 @@ function SettingsForm() {
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  // Security Form State - Email
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [newAdminEmail, setNewAdminEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState("");
+  const [showEmailPass, setShowEmailPass] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +104,50 @@ function SettingsForm() {
       toast.error("Failed to save configuration updates.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEmailChange = async (e) => {
+    e.preventDefault();
+    if (!newAdminEmail.trim() || !newAdminEmail.includes("@")) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    setEmailLoading(true);
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("No authenticated user");
+
+      const credential = EmailAuthProvider.credential(user.email, emailPassword);
+      await reauthenticateWithCredential(user, credential);
+      
+      try {
+        await verifyBeforeUpdateEmail(user, newAdminEmail.trim());
+        toast.success(`Verification link sent to ${newAdminEmail.trim()}! Please check inbox to confirm.`, { duration: 6000 });
+      } catch (err) {
+        if (err.code === "auth/operation-not-allowed") {
+          await updateEmail(user, newAdminEmail.trim());
+          toast.success("Admin email updated successfully!");
+        } else {
+          throw err;
+        }
+      }
+
+      setNewAdminEmail("");
+      setEmailPassword("");
+    } catch (error) {
+      console.error(error);
+      if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password") {
+        toast.error("Incorrect password.");
+      } else if (error.code === "auth/email-already-in-use") {
+        toast.error("This email is already in use by another account.");
+      } else if (error.code === "auth/operation-not-allowed") {
+        toast.error("Direct email change is disabled in Firebase Console. Verification link sent if supported.");
+      } else {
+        toast.error(error.message || "Failed to update email.");
+      }
+    } finally {
+      setEmailLoading(false);
     }
   };
 
@@ -111,47 +195,71 @@ function SettingsForm() {
       </div>
 
       {/* ─── Navigation Tabs ─── */}
-      <div className={styles.tabsNav}>
-        <button
-          type="button"
-          className={`${styles.tabBtn} ${activeTab === "general" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("general")}
-        >
-          <Building size={16} />
-          Store & Contacts
-        </button>
-        <button
-          type="button"
-          className={`${styles.tabBtn} ${activeTab === "hero" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("hero")}
-        >
-          <Home size={16} />
-          Homepage Copy
-        </button>
-        <button
-          type="button"
-          className={`${styles.tabBtn} ${activeTab === "inner" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("inner")}
-        >
-          <BookOpen size={16} />
-          Inner Pages
-        </button>
-        <button
-          type="button"
-          className={`${styles.tabBtn} ${activeTab === "seo" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("seo")}
-        >
-          <Search size={16} />
-          WhatsApp & SEO
-        </button>
-        <button
-          type="button"
-          className={`${styles.tabBtn} ${activeTab === "security" ? styles.tabActive : ""}`}
-          onClick={() => setActiveTab("security")}
-        >
-          <Lock size={16} />
-          Security (Password)
-        </button>
+      <div className={styles.tabsWrapper}>
+        {canScrollLeft && (
+          <button
+            type="button"
+            className={styles.tabArrow}
+            onClick={() => scrollTabs(-1)}
+            aria-label="Scroll tabs left"
+          >
+            <ChevronLeft size={18} />
+          </button>
+        )}
+
+        <div className={styles.tabsNav} ref={tabsRef}>
+          <button
+            type="button"
+            className={`${styles.tabBtn} ${activeTab === "general" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("general")}
+          >
+            <Building size={16} />
+            Store &amp; Contacts
+          </button>
+          <button
+            type="button"
+            className={`${styles.tabBtn} ${activeTab === "hero" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("hero")}
+          >
+            <Home size={16} />
+            Homepage Copy
+          </button>
+          <button
+            type="button"
+            className={`${styles.tabBtn} ${activeTab === "inner" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("inner")}
+          >
+            <BookOpen size={16} />
+            Inner Pages
+          </button>
+          <button
+            type="button"
+            className={`${styles.tabBtn} ${activeTab === "seo" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("seo")}
+          >
+            <Search size={16} />
+            WhatsApp &amp; SEO
+          </button>
+          <button
+            type="button"
+            className={`${styles.tabBtn} ${activeTab === "security" ? styles.tabActive : ""}`}
+            onClick={() => setActiveTab("security")}
+          >
+            <Lock size={16} />
+            Security (Password)
+          </button>
+        </div>
+
+        {canScrollRight && (
+          <button
+            type="button"
+            className={styles.tabArrow}
+            onClick={() => scrollTabs(1)}
+            aria-label="Scroll tabs right"
+          >
+            <ChevronRight size={18} />
+          </button>
+        )}
       </div>
 
       <div className={styles.form}>
@@ -781,9 +889,60 @@ function SettingsForm() {
           </form>
         )}
 
-        {/* ─── Tab Content: Change Password (Security) ─── */}
+        {/* ─── Tab Content: Security (Email & Password) ─── */}
         {activeTab === "security" && (
-          <form onSubmit={handlePasswordChange}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+            {/* ── Change Admin Email ── */}
+            <form onSubmit={handleEmailChange}>
+              <div className={styles.card}>
+                <h3>Account Email (Change Email)</h3>
+                <p className={styles.helpText}>
+                  Update the email address used to log into the Admin Dashboard ({auth.currentUser?.email}).
+                </p>
+                <div className={styles.grid}>
+                  <div className={styles.inputGroup}>
+                    <label>New Admin Email</label>
+                    <input
+                      type="email"
+                      placeholder="Enter new email address"
+                      value={newAdminEmail}
+                      onChange={(e) => setNewAdminEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.inputGroup}>
+                    <label>Current Password (Verification)</label>
+                    <div className={styles.passwordInputWrapper}>
+                      <input
+                        type={showEmailPass ? "text" : "password"}
+                        placeholder="Enter password to confirm"
+                        value={emailPassword}
+                        onChange={(e) => setEmailPassword(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className={styles.eyeToggleBtn}
+                        aria-label={showEmailPass ? "Hide password" : "Show password"}
+                        onClick={() => setShowEmailPass(!showEmailPass)}
+                      >
+                        {showEmailPass ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.actions} style={{ marginTop: "16px" }}>
+                <button type="submit" className={styles.button} disabled={emailLoading}>
+                  {emailLoading ? "Updating Email..." : "Update Admin Email"}
+                </button>
+              </div>
+            </form>
+
+            {/* ── Change Password ── */}
+            <form onSubmit={handlePasswordChange}>
             <div className={styles.card}>
               <h3>Security Settings (Change Password)</h3>
               <p className={styles.helpText}>
@@ -792,7 +951,7 @@ function SettingsForm() {
               <div className={styles.grid}>
                 <div className={styles.inputGroup}>
                   <label>Current Password</label>
-                  <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                  <div className={styles.passwordInputWrapper}>
                     <input
                       type={showCurrent ? "text" : "password"}
                       placeholder="Enter current password"
@@ -802,14 +961,8 @@ function SettingsForm() {
                     />
                     <button
                       type="button"
-                      style={{
-                        position: "absolute",
-                        right: 12,
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "var(--text-light)",
-                      }}
+                      className={styles.eyeToggleBtn}
+                      aria-label={showCurrent ? "Hide password" : "Show password"}
                       onClick={() => setShowCurrent(!showCurrent)}
                     >
                       {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -819,7 +972,7 @@ function SettingsForm() {
 
                 <div className={styles.inputGroup}>
                   <label>New Password</label>
-                  <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                  <div className={styles.passwordInputWrapper}>
                     <input
                       type={showNew ? "text" : "password"}
                       placeholder="Min 6 characters"
@@ -829,14 +982,8 @@ function SettingsForm() {
                     />
                     <button
                       type="button"
-                      style={{
-                        position: "absolute",
-                        right: 12,
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "var(--text-light)",
-                      }}
+                      className={styles.eyeToggleBtn}
+                      aria-label={showNew ? "Hide password" : "Show password"}
                       onClick={() => setShowNew(!showNew)}
                     >
                       {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -846,7 +993,7 @@ function SettingsForm() {
 
                 <div className={styles.inputGroup}>
                   <label>Confirm Password</label>
-                  <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                  <div className={styles.passwordInputWrapper}>
                     <input
                       type={showConfirm ? "text" : "password"}
                       placeholder="Repeat new password"
@@ -856,14 +1003,8 @@ function SettingsForm() {
                     />
                     <button
                       type="button"
-                      style={{
-                        position: "absolute",
-                        right: 12,
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "var(--text-light)",
-                      }}
+                      className={styles.eyeToggleBtn}
+                      aria-label={showConfirm ? "Hide password" : "Show password"}
                       onClick={() => setShowConfirm(!showConfirm)}
                     >
                       {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -879,6 +1020,7 @@ function SettingsForm() {
               </button>
             </div>
           </form>
+        </div>
         )}
       </div>
     </div>

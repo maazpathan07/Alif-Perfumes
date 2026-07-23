@@ -6,15 +6,28 @@ import { auth } from "../services/firebase";
 
 function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
-
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       auth,
-      (currentUser) => {
+      async (currentUser) => {
         setUser(currentUser);
-
+        if (currentUser) {
+          try {
+            const tokenResult = await currentUser.getIdTokenResult(true);
+            const hasAdminClaim = !!tokenResult.claims.admin;
+            const isAuthorizedAdminEmail = currentUser.email?.toLowerCase() === "pathanmaaz142@gmail.com";
+            setIsAdmin(hasAdminClaim || isAuthorizedAdminEmail);
+          } catch (error) {
+            console.error("Failed to verify admin claim:", error);
+            const isAuthorizedAdminEmail = currentUser.email?.toLowerCase() === "pathanmaaz142@gmail.com";
+            setIsAdmin(isAuthorizedAdminEmail);
+          }
+        } else {
+          setIsAdmin(false);
+        }
         setLoading(false);
       }
     );
@@ -35,7 +48,7 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return <Navigate to="/login" replace />;
   }
 

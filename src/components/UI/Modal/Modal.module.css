@@ -1,153 +1,135 @@
-.overlay{
-  position:fixed;
-
-  inset:0;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  padding:24px;
-
-  background:rgba(0,0,0,.45);
-
-  backdrop-filter:blur(4px);
-
-  z-index:9999;
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;          /* modal always starts from top */
+  padding: 80px 20px 20px;          /* 80px = topbar height (70px) + small gap */
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  overflow-y: auto;                 /* if modal itself is taller than screen, overlay scrolls */
 }
 
-.modal{
-  width:100%;
-
-  max-width:760px;
-
-  max-height:90vh;
-
-  overflow-y:auto;
-
-  background:white;
-
-  border-radius:22px;
-
-  box-shadow: 0 20px 50px rgba(26, 122, 88, 0.12);
-
-  animation:popup .25s ease;
+.modal {
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: popup 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  /* no max-height — overlay scrolls instead */
 }
 
-.header{
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  padding:24px 30px;
-
+/* ── Header: always visible at top ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
   border-bottom: 1px solid rgba(26, 122, 88, 0.1);
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-shrink: 0;
 }
 
-.header h2{
-  color:var(--primary);
-
-  font-size:28px;
+.header h2 {
+  color: var(--primary, #1a7a58);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
 }
 
-.close{
-  width:42px;
-
-  height:42px;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  border:none;
-
-  border-radius:50%;
-
-  background:#f5f5f5;
-
-  cursor:pointer;
-
-  transition:.3s;
+.close {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
-.close:hover{
-  background: rgba(26, 122, 88, 0.08);
-
-  color: var(--primary);
-
-  transform:rotate(90deg);
+.close:hover {
+  background: rgba(26, 122, 88, 0.1);
+  color: var(--primary, #1a7a58);
+  transform: rotate(90deg);
 }
 
-.body{
-  padding:30px;
+.body {
+  padding: 24px;
+  overflow: visible;  /* let overlay handle scroll */
 }
 
-@keyframes popup{
-
-from{
-
-opacity:0;
-
-transform:scale(.94);
-
+@keyframes popup {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-to{
-
-opacity:1;
-
-transform:scale(1);
-
+/* ── Tablet ── */
+@media (max-width: 992px) {
+  .overlay {
+    padding-top: 80px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }
 
+/* ── Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 76px 10px 20px;
+  }
+
+  .modal {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .header {
+    padding: 14px 18px;
+  }
+
+  .header h2 {
+    font-size: 17px;
+  }
+
+  .body {
+    padding: 16px 18px;
+  }
 }
 
-@media(max-width:768px){
-
-  .modal{
-    max-width:100%;
+/* ── Small Mobile (≤480px) ── */
+@media (max-width: 480px) {
+  .overlay {
+    padding: 74px 8px 16px;
   }
 
-  .header{
-    padding:18px 20px;
+  .header {
+    padding: 12px 14px;
   }
 
-  .header h2{
-    font-size:20px;
+  .header h2 {
+    font-size: 16px;
   }
 
-  .body{
-    padding:20px;
+  .body {
+    padding: 14px;
   }
-
-}
-
-@media(max-width:480px){
-
-  .overlay{
-    padding:12px;
-  }
-
-  .modal{
-    border-radius:16px;
-  }
-
-  .header{
-    padding:16px;
-  }
-
-  .header h2{
-    font-size:18px;
-  }
-
-  .body{
-    padding:16px;
-  }
-
 }

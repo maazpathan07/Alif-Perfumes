@@ -18,6 +18,7 @@ import { deleteImage } from "../../../../services/storageService";
 import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import EmptyState from "../../../UI/EmptyState/EmptyState";
 import ConfirmModal from "../../../UI/ConfirmModal/ConfirmModal";
+import ScrollableTable from "../../../UI/ScrollableTable/ScrollableTable";
 
 import styles from "./CategoryTable.module.css";
 
@@ -145,7 +146,7 @@ function CategoryTable({ onEdit }) {
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <ScrollableTable>
 
         <table className={styles.table}>
 
@@ -266,7 +267,7 @@ function CategoryTable({ onEdit }) {
 
         </table>
 
-      </div>
+      </ScrollableTable>
 
       <ConfirmModal
         open={showModal}

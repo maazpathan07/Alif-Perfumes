@@ -72,7 +72,7 @@ function Hero() {
 
                 <div>
 
-                  <h3>{settings?.heroStat1Number || "500+"}</h3>
+                  <p className={styles.statNumber}>{settings?.heroStat1Number || "500+"}</p>
 
                   <span>
                     {settings?.heroStat1Label || "Premium Products"}
@@ -86,7 +86,7 @@ function Hero() {
 
                 <div>
 
-                  <h3>{settings?.heroStat2Number || "5000+"}</h3>
+                  <p className={styles.statNumber}>{settings?.heroStat2Number || "5000+"}</p>
 
                   <span>
                     {settings?.heroStat2Label || "Happy Customers"}
@@ -100,7 +100,7 @@ function Hero() {
 
                 <div>
 
-                  <h3>{settings?.heroStat3Number || "100%"}</h3>
+                  <p className={styles.statNumber}>{settings?.heroStat3Number || "100%"}</p>
 
                   <span>
                     {settings?.heroStat3Label || "Original Fragrances"}
@@ -128,7 +128,7 @@ function Hero() {
 
                 <img
                   src={settings?.heroImage || perfume}
-                  alt={settings?.businessName || "Luxury Arabic Perfume"}
+                  alt="Luxury Arabic Perfume bottle"
                   className={styles.perfume}
                   loading="eager"
                 />

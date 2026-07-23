@@ -1,9 +1,24 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Check if user is authenticated (Admin)
+    // Check if user is authenticated and possesses custom admin claim
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Validate public lead submission schema (Enhanced Least Privilege & Security Hardening)
+    function isValidOrderSubmission() {
+      let data = request.resource.data;
+      return data.status == "Pending"
+        && data.keys().hasOnly(['productId', 'productName', 'price', 'image', 'name', 'phone', 'message', 'status', 'timestamp'])
+        && data.productId is string && data.productId.size() < 100
+        && data.productName is string && data.productName.size() < 250
+        && data.price is number && data.price >= 0 && data.price <= 1000000
+        && data.image is string && data.image.size() < 1000
+        && (!('name' in data) || (data.name is string && data.name.size() < 100))
+        && (!('phone' in data) || (data.phone is string && data.phone.size() < 50))
+        && (!('message' in data) || (data.message is string && data.message.size() < 2000))
+        && data.timestamp == request.time;
     }
 
     match /products/{productId} {
@@ -27,7 +42,8 @@ service cloud.firestore {
     }
 
     match /orders/{orderId} {
-      allow read, write: if isAdmin();
+      allow create: if isValidOrderSubmission();
+      allow read, update, delete: if isAdmin();
     }
 
     match /users/{userId} {

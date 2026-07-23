@@ -54,7 +54,8 @@
   gap: 40px;
 }
 
-.grid h2 {
+.grid h2,
+.brandTitle {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 24px;
   font-weight: 900;
@@ -64,7 +65,8 @@
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-.grid h3 {
+.grid h3,
+.grid h2 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
@@ -74,7 +76,8 @@
   width: fit-content;
 }
 
-.grid h3::after {
+.grid h3::after,
+.grid h2::after {
   content: "";
   position: absolute;
   left: 0;
@@ -197,12 +200,14 @@
     gap: 30px;
   }
 
-  .grid h3 {
+  .grid h3,
+  .grid h2 {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .grid h3::after {
+  .grid h3::after,
+  .grid h2::after {
     left: 50%;
     transform: translateX(-50%);
   }

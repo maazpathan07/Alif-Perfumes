@@ -54,10 +54,10 @@ function Footer() {
 
             <div>
 
-              <h2>
+              <p className={styles.brandTitle}>
                 {settings?.businessName ||
                   "ALIF PERFUMES"}
-              </h2>
+              </p>
 
               <p>
                 {settings?.footerDescription ||
@@ -68,9 +68,9 @@ function Footer() {
 
             {/* Quick Links */}
 
-            <div>
+            <nav aria-label="Footer Quick Links">
 
-              <h3>Quick Links</h3>
+              <h2>Quick Links</h2>
 
               <Link to="/">Home</Link>
 
@@ -86,13 +86,13 @@ function Footer() {
                 Contact
               </Link>
 
-            </div>
+            </nav>
 
             {/* Categories */}
 
-            <div>
+            <nav aria-label="Footer Categories">
 
-              <h3>Categories</h3>
+              <h2>Categories</h2>
 
               {categories.length > 0 ? (
                 categories.slice(0, 6).map((cat) => (
@@ -112,19 +112,20 @@ function Footer() {
                 </>
               )}
 
-            </div>
+            </nav>
 
             {/* Contact */}
 
             <div>
 
-              <h3>Contact</h3>
+              <h2>Contact</h2>
 
               <p>
 
                 <MessageCircle
                   size={18}
                   strokeWidth={2.2}
+                  aria-hidden="true"
                 />
 
                 {settings?.whatsapp ||
@@ -137,6 +138,7 @@ function Footer() {
                 <PhoneCall
                   size={18}
                   strokeWidth={2.2}
+                  aria-hidden="true"
                 />
 
                 {settings?.whatsapp ||
@@ -149,6 +151,7 @@ function Footer() {
                 <Mail
                   size={18}
                   strokeWidth={2.2}
+                  aria-hidden="true"
                 />
 
                 {settings?.email ||
@@ -161,6 +164,7 @@ function Footer() {
                 <MapPin
                   size={18}
                   strokeWidth={2.2}
+                  aria-hidden="true"
                 />
 
                 {settings?.address ||
@@ -175,9 +179,9 @@ function Footer() {
                     href={settings.instagram}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Instagram"
+                    aria-label="Instagram (opens in new tab)"
                   >
-                    <FaInstagram size={18} />
+                    <FaInstagram size={18} aria-hidden="true" />
                   </a>
                 )}
 
@@ -186,9 +190,9 @@ function Footer() {
                     href={settings.facebook}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Facebook"
+                    aria-label="Facebook (opens in new tab)"
                   >
-                    <FaFacebookF size={18} />
+                    <FaFacebookF size={18} aria-hidden="true" />
                   </a>
                 )}
 
@@ -197,9 +201,9 @@ function Footer() {
                     href={settings.youtube}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="YouTube"
+                    aria-label="YouTube (opens in new tab)"
                   >
-                    <FaYoutube size={18} />
+                    <FaYoutube size={18} aria-hidden="true" />
                   </a>
                 )}
 
@@ -208,9 +212,9 @@ function Footer() {
                     href={settings.website}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Website"
+                    aria-label="Website (opens in new tab)"
                   >
-                    <FaGlobe size={18} />
+                    <FaGlobe size={18} aria-hidden="true" />
                   </a>
                 )}
 
@@ -224,7 +228,15 @@ function Footer() {
 
         <div className={styles.bottom}>
 
-          <p>
+          <p
+            onClick={(e) => {
+              if (e.detail === 2) {
+                window.location.href = "/login";
+              }
+            }}
+            title="ALIF PERFUMES"
+            style={{ cursor: "default", userSelect: "none" }}
+          >
 
             © {currentYear}{" "}
 

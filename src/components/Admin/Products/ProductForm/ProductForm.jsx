@@ -16,6 +16,8 @@ import {
 
 import toast from "react-hot-toast";
 
+import ImageCropModal from "../ImageCropModal/ImageCropModal";
+
 function ProductForm({
   product,
   onSuccess,
@@ -25,6 +27,8 @@ function ProductForm({
     useState(false);
 
   const [categories, setCategories] = useState([]);
+  const [rawFileForCrop, setRawFileForCrop] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -118,15 +122,30 @@ function ProductForm({
       files,
     } = e.target;
 
+    if (type === "file") {
+      if (files && files[0]) {
+        setRawFileForCrop(files[0]);
+      }
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : type === "file"
-          ? files[0]
-          : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const handleCropConfirm = (finalFile) => {
+    setFormData((prev) => ({
+      ...prev,
+      image: finalFile,
+    }));
+    setPreviewUrl(URL.createObjectURL(finalFile));
+    setRawFileForCrop(null);
+  };
+
+  const handleCropCancel = () => {
+    setRawFileForCrop(null);
   };
 
   const resetForm = () => {
@@ -144,6 +163,7 @@ function ProductForm({
       featured: false,
       image: null,
     });
+    setPreviewUrl(null);
   };
 
     const handleSubmit = async (e) => {
@@ -152,6 +172,18 @@ function ProductForm({
   setLoading(true);
 
   try {
+    if (Number(formData.price) < 0 || (formData.discountPrice && Number(formData.discountPrice) < 0)) {
+      toast.error("Price cannot be negative.");
+      setLoading(false);
+      return;
+    }
+
+    if (Number(formData.rating) < 0 || Number(formData.rating) > 5) {
+      toast.error("Rating must be between 0 and 5.");
+      setLoading(false);
+      return;
+    }
+
     if (formData.discountPrice && Number(formData.discountPrice) >= Number(formData.price)) {
       toast.error("Discount price must be lower than original price.");
       setLoading(false);
@@ -263,145 +295,213 @@ function ProductForm({
     >
 
       <div className={styles.grid}>
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-name" className={styles.label}>Product Name *</label>
+          <input
+            id="product-name"
+            type="text"
+            name="name"
+            placeholder="e.g. Royal Oud Intense"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-category" className={styles.label}>Category *</label>
+          <select
+            id="product-category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Category</option>
+            {(categories.length > 0 ? categories.map(c => c.name) : ["Arabic Perfumes", "Attars", "Bakhoor", "Gift Sets"]).map((catName) => (
+              <option key={catName} value={catName}>
+                {catName}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-          required
-        >
-          <option value="">
-            Select Category
-          </option>
-          {(categories.length > 0 ? categories.map(c => c.name) : ["Arabic Perfumes", "Attars", "Bakhoor", "Gift Sets"]).map((catName) => (
-            <option key={catName} value={catName}>
-              {catName}
-            </option>
-          ))}
-        </select>
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-price" className={styles.label}>Original Price (₹) *</label>
+          <input
+            id="product-price"
+            type="number"
+            name="price"
+            placeholder="e.g. 2999"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="price"
-          placeholder="Original Price (₹)"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-discount-price" className={styles.label}>Discount Price (₹)</label>
+          <input
+            id="product-discount-price"
+            type="number"
+            name="discountPrice"
+            placeholder="e.g. 2499 (Optional)"
+            value={formData.discountPrice}
+            onChange={handleChange}
+          />
+        </div>
 
-        <input
-          type="number"
-          name="discountPrice"
-          placeholder="Discount Price (₹) - Optional"
-          value={formData.discountPrice}
-          onChange={handleChange}
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-rating" className={styles.label}>Rating (0 - 5) *</label>
+          <input
+            id="product-rating"
+            type="number"
+            name="rating"
+            placeholder="e.g. 4.8"
+            min="0"
+            max="5"
+            step="0.1"
+            value={formData.rating}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="rating"
-          placeholder="Rating"
-          min="0"
-          max="5"
-          step="0.1"
-          value={formData.rating}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-top-notes" className={styles.label}>Top Notes</label>
+          <input
+            id="product-top-notes"
+            type="text"
+            name="topNotes"
+            placeholder="e.g. Lavender, Bergamot"
+            value={formData.topNotes}
+            onChange={handleChange}
+          />
+        </div>
 
-        <input
-          type="text"
-          name="topNotes"
-          placeholder="Top Notes (e.g. Lavender, Rose)"
-          value={formData.topNotes}
-          onChange={handleChange}
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-middle-notes" className={styles.label}>Middle Notes</label>
+          <input
+            id="product-middle-notes"
+            type="text"
+            name="middleNotes"
+            placeholder="e.g. Amber, Patchouli"
+            value={formData.middleNotes}
+            onChange={handleChange}
+          />
+        </div>
 
-        <input
-          type="text"
-          name="middleNotes"
-          placeholder="Middle/Heart Notes (e.g. Amber, Patchouli)"
-          value={formData.middleNotes}
-          onChange={handleChange}
-        />
-
-        <input
-          type="text"
-          name="baseNotes"
-          placeholder="Base Notes (e.g. Sandalwood, Musk, Oud)"
-          value={formData.baseNotes}
-          onChange={handleChange}
-        />
-
+        <div className={styles.fieldGroup}>
+          <label htmlFor="product-base-notes" className={styles.label}>Base Notes</label>
+          <input
+            id="product-base-notes"
+            type="text"
+            name="baseNotes"
+            placeholder="e.g. Sandalwood, Agarwood Oud"
+            value={formData.baseNotes}
+            onChange={handleChange}
+          />
+        </div>
       </div>
 
-      <textarea
-        name="description"
-        rows="5"
-        placeholder="Description"
-        value={formData.description}
-        onChange={handleChange}
-        required
-      />
+      <div className={styles.fieldGroupFull}>
+        <label htmlFor="product-description" className={styles.label}>Description *</label>
+        <textarea
+          id="product-description"
+          name="description"
+          rows="4"
+          placeholder="Enter detailed perfume description..."
+          value={formData.description}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-      <textarea
-        name="features"
-        rows="4"
-        placeholder="Features (comma separated)"
-        value={formData.features}
-        onChange={handleChange}
-      />
+      <div className={styles.fieldGroupFull}>
+        <label htmlFor="product-features" className={styles.label}>Features (comma separated)</label>
+        <textarea
+          id="product-features"
+          name="features"
+          rows="3"
+          placeholder="e.g. Long-lasting 24h, Premium Agarwood, Cruelty-free"
+          value={formData.features}
+          onChange={handleChange}
+        />
+      </div>
 
-      <input
-        type="file"
-        name="image"
-        accept="image/*"
-        onChange={handleChange}
-        required={!product}
-      />
+      {/* Selected / Current Image Preview */}
+      {(previewUrl || (typeof formData.image === "string" && formData.image)) && (
+        <div className={styles.previewBox}>
+          <img
+            src={previewUrl || formData.image}
+            alt="Product Preview"
+            className={styles.previewImg}
+          />
+          <div>
+            <span className={styles.previewTextTitle}>
+              ✓ Image Selected & Ready
+            </span>
+            <span className={styles.previewTextSub}>
+              Click file button below to change or recrop.
+            </span>
+          </div>
+        </div>
+      )}
+
+      <div className={styles.fieldGroupFull}>
+        <label htmlFor="product-image" className={styles.label}>Product Image *</label>
+        <input
+          id="product-image"
+          type="file"
+          name="image"
+          className={styles.fileInput}
+          accept="image/*"
+          onChange={handleChange}
+          required={!product && !formData.image}
+        />
+      </div>
+
+      {/* Image Crop & Preview Modal */}
+      {rawFileForCrop && (
+        <ImageCropModal
+          imageFile={rawFileForCrop}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
 
       <div className={styles.checks}>
-
-        <label>
-
+        <label className={styles.checkboxLabel}>
           <input
             type="checkbox"
             name="inStock"
             checked={formData.inStock}
             onChange={handleChange}
           />
-
           In Stock
-
         </label>
 
-        <label>
-
+        <label className={styles.checkboxLabel}>
           <input
             type="checkbox"
             name="featured"
             checked={formData.featured}
             onChange={handleChange}
           />
-
           Featured Product
-
         </label>
-
       </div>
 
         {loading && status === "Uploading" && (
 
-          <div className={styles.progressContainer}>
+          <div
+            className={styles.progressContainer}
+            role="progressbar"
+            aria-valuenow={uploadProgress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Image upload progress"
+          >
 
             <div className={styles.progressTop}>
 

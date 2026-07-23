@@ -110,6 +110,12 @@ function TestimonialForm({
     setLoading(true);
 
     try {
+      if (Number(formData.rating) < 1 || Number(formData.rating) > 5) {
+        toast.error("Rating must be between 1 and 5.");
+        setLoading(false);
+        return;
+      }
+
       let imageUrl = formData.image;
 
       if (imageFile) {
@@ -186,7 +192,9 @@ function TestimonialForm({
       onSubmit={handleSubmit}
     >
 
+      <label htmlFor="test-name" className="visually-hidden">Customer Name</label>
       <input
+        id="test-name"
         type="text"
         name="name"
         placeholder="Customer Name"
@@ -195,7 +203,9 @@ function TestimonialForm({
         required
       />
 
+      <label htmlFor="test-city" className="visually-hidden">City</label>
       <input
+        id="test-city"
         type="text"
         name="city"
         placeholder="City"
@@ -203,9 +213,12 @@ function TestimonialForm({
         onChange={handleChange}
       />
 
+      <label htmlFor="test-rating" className="visually-hidden">Rating (1 to 5)</label>
       <input
+        id="test-rating"
         type="number"
         name="rating"
+        placeholder="Rating (1-5)"
         min="1"
         max="5"
         value={formData.rating}
@@ -213,7 +226,9 @@ function TestimonialForm({
         required
       />
 
+      <label htmlFor="test-review" className="visually-hidden">Customer Review</label>
       <textarea
+        id="test-review"
         rows="5"
         name="review"
         placeholder="Customer Review"
@@ -222,7 +237,9 @@ function TestimonialForm({
         required
       />
 
+      <label htmlFor="test-image-url" className="visually-hidden">Photo URL (Fallback)</label>
       <input
+        id="test-image-url"
         type="text"
         name="image"
         placeholder="Photo URL (Fallback)"
@@ -231,19 +248,20 @@ function TestimonialForm({
       />
 
       <div className={styles.fileInputGroup}>
-        <label>Or Upload Testimonial Photo File:</label>
+        <label htmlFor="test-image-file">Or Upload Testimonial Photo File:</label>
         <input
+          id="test-image-file"
           type="file"
           accept="image/*"
           onChange={(e) => setImageFile(e.target.files[0])}
         />
       </div>
 
-      {(imageFile || formData.image) && (
+      {(imageFile || (formData.image && formData.image.trim() !== "")) && (
         <div className={styles.previewContainer}>
           <img
             src={imageFile ? URL.createObjectURL(imageFile) : formData.image}
-            alt="Preview"
+            alt="Testimonial photo preview"
             className={styles.preview}
           />
           {imageFile && (
@@ -251,6 +269,7 @@ function TestimonialForm({
               type="button"
               onClick={() => setImageFile(null)}
               className={styles.removePreview}
+              aria-label="Remove photo file"
             >
               Remove
             </button>
@@ -259,7 +278,14 @@ function TestimonialForm({
       )}
 
       {loading && status === "Uploading" && (
-        <div className={styles.progressContainer}>
+        <div
+          className={styles.progressContainer}
+          role="progressbar"
+          aria-valuenow={uploadProgress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Photo upload progress"
+        >
           <div className={styles.progressTop}>
             <span>Uploading Image...</span>
             <span>{uploadProgress}%</span>
